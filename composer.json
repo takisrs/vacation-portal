@@ -1,0 +1,33 @@
+{
+    "name": "takisrs/vacation-portal",
+    "description": "A simple portal that handles vacation requests",
+    "keywords": [
+        "php",
+        "vacation",
+        "portal"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "readme": "README.md",
+    "homepage": "https://github.com/takisrs/vacation-portal",
+    "authors": [
+        {
+            "name": "Panos Pantazopoulos",
+            "email": "takispadaz@gmail.com",
+            "homepage": "https://github.com/takisrs",
+            "role": "Full Stack Developer"
+        }
+    ],
+    "support": {
+        "email": "takispadaz@gmail.com"
+    },
+    "autoload": {
+        "psr-4": {
+            "takisrs\\": "src/"
+        }
+    },
+    "require": {
+        "firebase/php-jwt": "^5.2",
+        "phpmailer/phpmailer": "^6.3"
+    }
+}
