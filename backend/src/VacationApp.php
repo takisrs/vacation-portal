@@ -64,11 +64,8 @@ class VacationApp
             $this->router->run();
         } catch (\Exception|\Error $e) {
             $this->response->status(500)->send([
-                "status" => false,
-                "message" => "Error Occured",
-                "data" => [
-                    "errors" => $e->getMessage()
-                ]
+                "ok" => false,
+                "message" => sprintf("Error Occured: %s", $e->getMessage())
             ]);
         }
     }

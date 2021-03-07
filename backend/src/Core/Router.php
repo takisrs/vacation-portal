@@ -58,9 +58,8 @@ class Router
             }
         } catch (\Exception $e) {
             $this->response->status(401)->send([
-                "status" => false,
-                "message" => "Not authenticated",
-                "data" => $e->getMessage()
+                "ok" => false,
+                "message" => sprintf("Not authenticated: %s", $e->getMessage())
             ]);
         }
     }
@@ -171,6 +170,10 @@ class Router
         $uri = $this->request->getUri();
         $method = $this->request->getMethod();
 
+        if ($method === "OPTIONS"){
+            $this->response->status(200)->send("");
+        }
+
         $matchedRoutes = array_filter($this->routes, function ($route) use ($method) {
             return $route["method"] == $method;
         });
@@ -182,18 +185,23 @@ class Router
         $matchedRoute = reset($matchedRoutes);
         $params = [];
 
-        if ($matchedRoute["access"] > 0) {
-            $this->requireAuth($matchedRoute["access"]);
+        if ($matchedRoute){
+            if (isset($matchedRoute["access"]) && $matchedRoute["access"] > 0) {
+                $this->requireAuth($matchedRoute["access"]);
+            }
+    
+            $controller = new $matchedRoute["controller"]($this->request, $this->response);
+    
+            if (is_callable([$controller, $matchedRoute["action"]]))
+                call_user_func([$controller, $matchedRoute["action"]], $params);
+            else
+                throw new \Exception("Controller action not found " . $matchedRoute["controller"] . "@" . $matchedRoute["action"]);
+        } else {
+            $this->response->status(404)->send([
+                "ok" => false,
+                "message" => sprintf("No matching route for %s - %s", $uri, $method)
+            ]);
         }
 
-        $controller = new $matchedRoute["controller"]($this->request, $this->response);
-
-        if (is_callable([$controller, $matchedRoute["action"]]))
-            call_user_func([$controller, $matchedRoute["action"]], $params);
-        else
-            $this->response->status(404)->send([
-                "status" => false,
-                "message" => "Controller action not found " . $matchedRoute["controller"] . "@" . $matchedRoute["action"]
-            ]);
     }
 }

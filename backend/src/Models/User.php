@@ -44,7 +44,8 @@ class User extends Model
             ":lastName" => $this->lastName,
             ":email" => $this->email,
             ":password" => $this->password,
-            ":type" => $this->type
+            ":type" => $this->type,
+            ":createdAt" => $this->createdAt
         ]);
 
         if ($result) {

@@ -29,8 +29,11 @@ class ApplicationController extends Controller
             $applications = $application->findAll();
         }
 
+        foreach ($applications as $index => $application)
+            $applications[$index]->days = $application->days();
+
         $this->response->status(200)->send([
-            "status" => true,
+            "ok" => true,
             "message" => sprintf("Retrieved %d applications", count($applications)),
             "data" => [
                 "applications" => $applications
@@ -69,7 +72,7 @@ class ApplicationController extends Controller
                 $email->send('takispadaz@gmail.com');
 
                 $this->response->status(200)->send([
-                    "status" => true,
+                    "ok" => true,
                     "message" => "Application created successfully",
                     "data" => [
                         "application" => $application
@@ -80,11 +83,8 @@ class ApplicationController extends Controller
             }
         } catch (\Exception $e) {
             $this->response->status(401)->send([
-                "status" => false,
-                "message" => "Application's submission failed",
-                "data" => [
-                    "error" => $e->getMessage()
-                ]
+                "ok" => false,
+                "message" => sprintf("Application's submission failed: %s", $e->getMessage())
             ]);
         }
     }
@@ -113,7 +113,7 @@ class ApplicationController extends Controller
             //$email->send("");
 
             $this->response->status(200)->send([
-                "status" => true,
+                "ok" => true,
                 "message" => "Application approved",
                 "data" => [
                     "application" => $application
@@ -121,13 +121,8 @@ class ApplicationController extends Controller
             ]);
         } catch (\Exception $e) {
             $this->response->status(401)->send([
-                "status" => true,
-                "message" => "Application approval failed",
-                "data" => [
-                    "errors" => [
-                        $e->getMessage()
-                    ]
-                ]
+                "ok" => true,
+                "message" => sprintf("Application approval failed: %s", $e->getMessage())
             ]);
         }
     }
@@ -156,7 +151,7 @@ class ApplicationController extends Controller
             //$email->send("");
 
             $this->response->status(200)->send([
-                "status" => true,
+                "ok" => true,
                 "message" => "Application rejected",
                 "data" => [
                     "application" => $application
@@ -164,13 +159,8 @@ class ApplicationController extends Controller
             ]);
         } catch (\Exception $e) {
             $this->response->status(401)->send([
-                "status" => true,
-                "message" => "Application rejection failed",
-                "data" => [
-                    "errors" => [
-                        $e->getMessage()
-                    ]
-                ]
+                "ok" => true,
+                "message" => sprintf("Application rejection failed: %s", $e->getMessage())
             ]);
         }
     }

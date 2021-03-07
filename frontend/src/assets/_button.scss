@@ -1,0 +1,37 @@
+.btn {
+	background-color: $primary;
+	border: 0;
+	padding: 1rem 2rem;
+	color: $white;
+	display: inline-block;
+	text-decoration: none;
+	font-size: 1.5rem;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.4s;
+	border-radius: 4px;
+
+	&:hover,
+	&:active,
+	&:focus,
+	&--active {
+		background-color: $dark;
+		color: $white;
+		text-decoration: none;
+	}
+
+	&--danger {
+		background: $danger;
+
+		&:hover,
+		&:active,
+		&:focus,
+		&.btn--active {
+			background: $primary;
+		}
+	}
+
+	&--right {
+		float: right;
+	}
+}

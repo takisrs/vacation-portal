@@ -42,7 +42,7 @@ class AuthController extends Controller
                 ]
             ]);
             $this->response->status(200)->send([
-                "status" => true,
+                "ok" => true,
                 "message" => "User loggedin successfully",
                 "data" => [
                     "token" => $token,
@@ -52,9 +52,8 @@ class AuthController extends Controller
         }
 
         $this->response->status(401)->send([
-            "status" => false,
-            "message" => "Login failed. Wrong username or password",
-            "data" => ""
+            "ok" => false,
+            "message" => "Login failed. Wrong username or password"
         ]);
     }
 }

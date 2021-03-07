@@ -1,0 +1,42 @@
+.form {
+	&__group {
+		margin: 1rem 0rem;
+	}
+
+	&__label {
+		display: inline-block;
+		margin-bottom: 0.5rem;
+	}
+
+	&__input, &__select {
+		padding: 1rem 1rem;
+		width: 100%;
+		border: 1px $light solid;
+		background: $white;
+		box-shadow: 0 0 0 0.05rem rgba($dark, 0.1);
+		font-family: inherit;
+		font-size: 1.6rem;
+		display: block;
+		background-clip: padding-box;
+		border-radius: 4px;
+		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+		&:hover {
+			border-color: darken($light, 20%);
+			outline: 0;
+			box-shadow: 0 0 0 0.05rem rgba($dark, 0.25);
+		}
+
+		&:focus {
+			border-color: darken($light, 40%);
+			outline: 0;
+			box-shadow: 0 0 0 0.08rem rgba($dark, 0.4);
+		}
+	}
+
+	&__action {
+		&--right {
+			float: right;
+		}
+	}
+}

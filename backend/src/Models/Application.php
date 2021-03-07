@@ -91,4 +91,10 @@ class Application extends Model
         $this->status = self::STATUS_REJECTED;
         return $this->update();
     }
+
+    public function days(){
+        $dateFrom = new \DateTime($this->dateFrom);
+        $dateTo = new \DateTime($this->dateTo);
+        return $dateTo->diff($dateFrom)->format("%a");
+    }
 }

@@ -24,7 +24,7 @@ class UserController extends Controller
         
         if (count($users) > 0){
             $this->response->status(200)->send([
-                "status" => true,
+                "ok" => true,
                 "message" => sprintf("Retrieved %d users", count($users)),
                 "data" => [
                     "users" => $users
@@ -53,7 +53,7 @@ class UserController extends Controller
 
             if ($user) {
                 $this->response->status(200)->send([
-                    "status" => true,
+                    "ok" => true,
                     "message" => "User created successfully",
                     "data" => [
                         "user" => $user
@@ -64,11 +64,8 @@ class UserController extends Controller
             }
         } catch (\Exception $e) {
             $this->response->status(401)->send([
-                "status" => false,
-                "message" => "User's creation failed",
-                "data" => [
-                    "error" => $e->getMessage()
-                ]
+                "ok" => false,
+                "message" => sprintf("User's creation failed: %s", $e->getMessage())
             ]);
         }
     }
@@ -102,7 +99,7 @@ class UserController extends Controller
             $user->update();
             
             $this->response->status(200)->send([
-                "status" => true,
+                "ok" => true,
                 "message" => "User updated",
                 "data" => [
                     "user" => $user
@@ -110,13 +107,8 @@ class UserController extends Controller
             ]);
         } catch (\Exception $e) {
             $this->response->status(401)->send([
-                "status" => true,
-                "message" => "User update failed",
-                "data" => [
-                    "errors" => [
-                        $e->getMessage()
-                    ]
-                ]
+                "ok" => true,
+                "message" => sprintf("User update failed: %s", $e->getMessage())
             ]);
         }
 
