@@ -6,8 +6,9 @@ use takisrs\Core\Model;
 
 class Application extends Model
 {
-    public static string $tableName = 'applications';
-    public static string $primaryKey = 'id';
+    protected static string $tableName = 'applications';
+    protected static string $primaryKey = 'id';
+    protected static array $fields = ["id", "userId", "dateFrom", "dateTo", "reason", "status", "createdAt"];
 
     const STATUS_PENDING = 0;
     const STATUS_REJECTED = 1;
@@ -23,21 +24,23 @@ class Application extends Model
     public $createdAt;
     public $modifiedAt;
 
-    public function find(int $id): ?Application
-    {
-        $query = "SELECT * FROM " . self::$tableName . " WHERE " . self::$primaryKey . " = " . $id;
-        $result = $this->db->query($query);
-        return $result->rowCount() === 1 ? $this->mapResultToObject($result->fetch()) : null;
-    }
-
     public function create()
     {
         $query = "INSERT INTO " . self::$tableName . " (`userId`, `dateFrom`, `dateTo`, `reason`, `status`, `createdAt`) 
-        VALUES ('" . $this->userId . "', '" . $this->dateFrom . "', '" . $this->dateTo . "', '" . $this->reason . "', '" . $this->status . "', '" . $this->createdAt . "')";
+        VALUES (:userId, :dateFrom, :dateTo, :reason, :status, :createdAt)";
 
-        $count = $this->db->exec($query);
+        $statement = $this->db->prepare($query);
 
-        if ($count === 1) {
+        $result = $statement->execute([
+            ":userId" => $this->userId,
+            ":dateFrom" => $this->dateFrom,
+            ":dateTo" => $this->dateTo,
+            ":reason" => $this->reason,
+            ":status" => $this->status,
+            ":createdAt" => $this->createdAt
+        ]);
+
+        if ($result) {
             $this->id = $this->db->lastInsertId();
             return $this;
         }
@@ -67,6 +70,16 @@ class Application extends Model
         return $statement->execute();
     }
 
+    public function isApproved()
+    {
+        return $this->status === self::STATUS_APPROVED;
+    }
+
+    public function isRejected()
+    {
+        return $this->status === self::STATUS_REJECTED;
+    }
+
     public function approve()
     {
         $this->status = self::STATUS_APPROVED;
@@ -77,18 +90,5 @@ class Application extends Model
     {
         $this->status = self::STATUS_REJECTED;
         return $this->update();
-    }
-
-    public function findAll(): array
-    {
-        $applicationObjects = [];
-        $query = "SELECT * FROM " . self::$tableName;
-        $result = $this->db->query($query);
-        if ($result->rowCount() > 0) {
-            foreach ($result as $row) {
-                array_push($applicationObjects, $this->mapResultToObject($row));
-            }
-        }
-        return $applicationObjects;
     }
 }

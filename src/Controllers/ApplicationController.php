@@ -21,7 +21,15 @@ class ApplicationController extends Controller
     {
 
         $application = new Application;
-        $applications = $application->findAll();
+        //var_dump($this->request->user());
+        //var_dump($this->request->user()->isUser());
+        if ($this->request->user()->isUser()) {
+            $applications = $application->findBy([
+                'userId' => $this->request->user()->id
+            ]);
+        } else {
+            $applications = $application->findAll();
+        }
 
         $this->response->status(200)->send([
             "status" => true,
@@ -52,7 +60,7 @@ class ApplicationController extends Controller
 
             if ($application) {
                 // send an email
-                $email = new EmailTemplate(dirname(__DIR__).'/EmailTemplates/submitted.tem.php');
+                $email = new EmailTemplate(dirname(__DIR__) . '/EmailTemplates/submitted.tem.php');
                 $email->replaceVars([
                     'user' => $this->request->user()->firstName . ' ' . $this->request->user()->lastName,
                     'vacation_start' => $application->dateFrom,
@@ -99,13 +107,13 @@ class ApplicationController extends Controller
             if (!isset($application)) throw new \Exception("Application not found");
 
             $application->approve();
-            
+
             // send an email
-            $email = new EmailTemplate(dirname(__DIR__).'/EmailTemplates/approved.tem.php');
+            $email = new EmailTemplate(dirname(__DIR__) . '/EmailTemplates/approved.tem.php');
             $email->replaceVar('submission_date', $application->createdAt);
             // get the user object to retrieve the email
             //$email->send("");
-            
+
             $this->response->status(200)->send([
                 "status" => true,
                 "message" => "Application approved",
@@ -124,7 +132,6 @@ class ApplicationController extends Controller
                 ]
             ]);
         }
-
     }
 
     /**
@@ -145,11 +152,11 @@ class ApplicationController extends Controller
             $application->reject();
 
             // send an email
-            $email = new EmailTemplate(dirname(__DIR__).'/EmailTemplates/rejected.tem.php');
+            $email = new EmailTemplate(dirname(__DIR__) . '/EmailTemplates/rejected.tem.php');
             $email->replaceVar('submission_date', $application->createdAt);
             // get the user object to retrieve the email
             //$email->send("");
-    
+
             $this->response->status(200)->send([
                 "status" => true,
                 "message" => "Application rejected",

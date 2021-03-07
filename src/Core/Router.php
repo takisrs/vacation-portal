@@ -162,7 +162,7 @@ class Router
     }
 
     /**
-     * Matches the request with the corresponding controller/method and process it
+     * Matches the request with the corresponding controller/method and processes it
      *
      * @return void
      */

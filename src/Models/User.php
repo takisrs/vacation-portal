@@ -6,44 +6,74 @@ use takisrs\Core\Model;
 
 class User extends Model
 {
-    public static string $tableName = 'users';
-    public static string $primaryKey = 'id';
+    protected static string $tableName = 'users';
+    protected static string $primaryKey = 'id';
+    protected static array $fields = ["id", "firstName", "lastName", "email", "password", "type", "createdAt"];
+
+    const TYPE_USER = 1;
+    const TYPE_ADMIN = 2;
 
     public $id;
     public $firstName;
     public $lastName;
     public $email;
+    public $password;
     public $type;
     public $createdAt;
     public $modifiedAt;
 
-    public function find(int $id): ?User
+    public function isAdmin()
     {
-        $query = "SELECT * FROM " . self::$tableName . " WHERE " . self::$primaryKey . " = " . $id;
-        $result = $this->db->query($query);
-        return $result->rowCount() == 1 ? $this->mapResultToObject($result->fetch()) : null;
+        return (int) $this->type === self::TYPE_ADMIN;
     }
 
-    public function findOneBy(array $params): ?User
+    public function isUser()
     {
-        $where = $this->buildWhere($params);
-        $query = "SELECT * FROM users WHERE " . $where;
-        $result = $this->db->query($query);
-        if ($result->rowCount() > 0) {
-            return $this->mapResultToObject($result->fetch());
+        return (int) $this->type === self::TYPE_USER;
+    }
+
+    public function create()
+    {
+        $query = "INSERT INTO " . self::$tableName . " (`firstName`, `lastName`, `email`, `password`, `type`, `createdAt`) 
+        VALUES (:firstName, :lastName, :email, :password, :type, :createdAt)";
+
+        $statement = $this->db->prepare($query);
+
+        $result = $statement->execute([
+            ":firstName" => $this->firstName,
+            ":lastName" => $this->lastName,
+            ":email" => $this->email,
+            ":password" => $this->password,
+            ":type" => $this->type
+        ]);
+
+        if ($result) {
+            $this->id = $this->db->lastInsertId();
+            return $this;
         }
 
         return null;
     }
 
-    public function findAll(): array
+    public function update()
     {
-        $userObjects = [];
-        $query = "SELECT * FROM ".self::$tableName;
-        $result = $this->db->query($query);
-        foreach ($result as $row) {
-            array_push($userObjects, $this->mapResultToObject($row));
-        }
-        return $userObjects;
+        $statement = $this->db->prepare("UPDATE " . self::$tableName . " 
+        SET 
+            firstName = :firstName, 
+            lastName = :lastName, 
+            email = :email, 
+            password = :password,
+            type = :type
+        WHERE
+            id = :id");
+
+        $statement->bindParam("firstName", $this->firstName);
+        $statement->bindParam("lastName", $this->lastName);
+        $statement->bindParam("email", $this->email);
+        $statement->bindParam("password", $this->password);
+        $statement->bindParam("type", $this->type);
+        $statement->bindParam("id", $this->id);
+
+        return $statement->execute();
     }
 }
