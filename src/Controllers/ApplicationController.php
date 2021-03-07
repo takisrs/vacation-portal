@@ -21,8 +21,6 @@ class ApplicationController extends Controller
     {
 
         $application = new Application;
-        //var_dump($this->request->user());
-        //var_dump($this->request->user()->isUser());
         if ($this->request->user()->isUser()) {
             $applications = $application->findBy([
                 'userId' => $this->request->user()->id

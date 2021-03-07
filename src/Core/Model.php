@@ -36,16 +36,22 @@ class Model implements ModelInterface
         return $statement->rowCount() === 1 ? $this->mapResultToObject($statement->fetch(\PDO::FETCH_ASSOC)) : null;
     }
 
-    public function findBy(array $params): ?object
+    public function findBy(array $params): ?array
     {
+        $objects = [];
+
         list($where, $bindParams) = $this->buildWhere($params);
         $query = "SELECT * FROM " . get_called_class()::$tableName . " WHERE " . $where;
         $statement = $this->db->prepare($query);
         $statement->execute($bindParams);
-        if ($statement->rowCount() > 0){
-            
+        if ($statement->rowCount() > 0) {
+            foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result) {
+                array_push($objects, $this->mapResultToObject($result));
+            }
+            return $objects;
         }
-        return $statement->rowCount() > 0 ? $this->mapResultToObject($statement->fetch(\PDO::FETCH_ASSOC)) : null;
+
+        return null;
     }
 
     public function findAll(): array
@@ -63,7 +69,7 @@ class Model implements ModelInterface
     public function create()
     {
         $values = [];
-        foreach (get_called_class()::$fields as $field){
+        foreach (get_called_class()::$fields as $field) {
             array_push($values, $this->$field);
         }
         echo "(" . implode(', ', get_called_class()::$fields) . ") VALUES (" . implode(', ', $values) . ")";
