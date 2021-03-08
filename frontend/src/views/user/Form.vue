@@ -84,28 +84,31 @@ export default {
         }
     },
     created(){
-        fetch(process.env.VUE_APP_ENDPOINT + "/users/" + this.$route.params.id, {
-            headers: {
-                'Authorization': 'Bearer ' + this.token
-            }
-        }).then(response => {
-            //if (response.ok && response.status == 200)
-            return response.json();
-        }).then(body => {
-            if (body.ok) {
-                this.firstName = body.data.user.firstName;
-                this.lastName = body.data.user.lastName;
-                this.email = body.data.user.email;
-                this.userType = body.data.user.type;
-            } else {
-                this.$store.commit('setMessage', {
-                    class: "error", 
-                    message: body.message
-                });
-            }
-        }).catch(error => {
-            console.log(error);
-        });
+        if (this.$route.params.id){
+            fetch(process.env.VUE_APP_ENDPOINT + "/users/" + this.$route.params.id, {
+                headers: {
+                    'Authorization': 'Bearer ' + this.token
+                }
+            }).then(response => {
+                //if (response.ok && response.status == 200)
+                return response.json();
+            }).then(body => {
+                if (body.ok) {
+                    this.firstName = body.data.user.firstName;
+                    this.lastName = body.data.user.lastName;
+                    this.email = body.data.user.email;
+                    this.userType = body.data.user.type;
+                } else {
+                    this.$store.commit('setMessage', {
+                        class: "error", 
+                        message: body.message
+                    });
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+
     },
     mixins: [
         validationMixin

@@ -18,9 +18,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="(user, index) in users" :key="index">
-                        <td>{{ user.firstName }}</td>
+                        <td><router-link :to="'/users/edit/'+user.id">{{ user.firstName }}</router-link></td>
                         <td>{{ user.lastName }}</td>
-                        <td><router-link :to="'/users/edit/'+user.id">{{ user.email }}</router-link></td>
+                        <td>{{ user.email }}</td>
                         <td>{{ userTypes[user.type - 1] }}</td>
                         <td><router-link :to="'/users/edit/'+user.id">edit</router-link></td>
                     </tr>

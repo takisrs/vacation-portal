@@ -15,6 +15,15 @@ Vue.use(VueRouter);
 // register routes
 const routes = [
 	{
+		path: "/",
+		beforeEnter: (to, from, next) => {
+			next(store.getters.isAdmin ? { name: "UserList" } : { name: "ApplicationList" });
+		},
+		meta: {
+			requireAuthentication: true,
+		},
+	},
+	{
 		path: "/login",
 		name: "Login",
 		component: Login,
@@ -27,7 +36,7 @@ const routes = [
 		name: "ApplicationList",
 		component: ApplicationList,
 		meta: {
-			requireAuthentication: true
+			requireAuthentication: true,
 		},
 	},
 	{
@@ -35,29 +44,29 @@ const routes = [
 		name: "ApplicationCreate",
 		component: ApplicationForm,
 		meta: {
-			requireAuthentication: true
+			requireAuthentication: true,
 		},
 	},
 	{
 		path: "/applications/:id/approve",
 		name: "ApplicationApprove",
 		beforeEnter: (to) => {
-			store.dispatch("updateApplication", { action: 'approve', id: to.params.id });
+			store.dispatch("updateApplication", { action: "approve", id: to.params.id });
 		},
 		meta: {
 			requireAuthentication: true,
-      requireAdmin: true
+			requireAdmin: true,
 		},
 	},
 	{
 		path: "/applications/:id/reject",
-		name: "ApplicationApprove",
+		name: "ApplicationReject",
 		beforeEnter: (to) => {
-			store.dispatch("updateApplication", { action: 'reject', id: to.params.id });
+			store.dispatch("updateApplication", { action: "reject", id: to.params.id });
 		},
 		meta: {
 			requireAuthentication: true,
-      requireAdmin: true
+			requireAdmin: true,
 		},
 	},
 	{
@@ -66,7 +75,7 @@ const routes = [
 		component: UserList,
 		meta: {
 			requireAuthentication: true,
-      requireAdmin: true
+			requireAdmin: true,
 		},
 	},
 	{
@@ -75,7 +84,7 @@ const routes = [
 		component: UserForm,
 		meta: {
 			requireAuthentication: true,
-      requireAdmin: true
+			requireAdmin: true,
 		},
 	},
 	{
@@ -84,7 +93,7 @@ const routes = [
 		component: UserForm,
 		meta: {
 			requireAuthentication: true,
-      requireAdmin: true
+			requireAdmin: true,
 		},
 	},
 ];
@@ -94,30 +103,25 @@ const router = new VueRouter({
 	routes,
 });
 
-
 router.beforeEach(function(to, from, next) {
-  store.dispatch('checkAutoLogin').then(()=>{
-    if (to.meta.requireAdmin && !store.getters.isAdmin){
-      store.commit("setMessage", { message: "Admin privileges required to perform this action. Please login!", class: "error" });
-      next({
-        path: "/login",
-        query: { redirect: to.fullPath }
-      });
-    }
+	store.dispatch("checkAutoLogin").then(() => {
+		if (to.meta.requireAdmin && !store.getters.isAdmin) {
+			store.commit("setMessage", { message: "Admin privileges required to perform this action. Please login!", class: "error" });
+			next({
+				path: "/login",
+				query: { redirect: to.fullPath },
+			});
+		}
 
-    if (to.meta.requireAuthentication && !store.getters.isAuthenticated) {
-      next({
-        path: "/login",
-        query: { redirect: to.fullPath }
-      });
-    }
-
-    next();
-  });
-
+		if (to.meta.requireAuthentication && !store.getters.isAuthenticated) {
+			next({
+				path: "/login",
+				query: { redirect: to.fullPath },
+			});
+		} else {
+			next();
+		}
+	});
 });
-
-
-
 
 export default router;

@@ -27,7 +27,6 @@ export default {
                     token: token,
                     userData : userData
                 })
-                //router.go(-1);
             }
         },
 
