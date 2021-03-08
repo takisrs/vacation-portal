@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+    backend:
+        build: ./backend
+        ports:
+            - 80:80
+        volumes:
+            - ./backend:/var/www/html
+        depends_on: 
+            - db
+    frontend:
+        build: ./frontend
+        ports:
+            - 8080:8080
+        env_file:
+            - ./frontend/.env
+        volumes:
+            - ./frontend:/app
+    db:
+        image: mysql:5.7
+        ports:
+            - 3307:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=vacation
+            - MYSQL_USER=epignosis
+            - MYSQL_PASSWORD=epignosis
+        volumes:
+            - ./backend/sql:/docker-entrypoint-initdb.d
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            - PMA_HOST=db
+            - PMA_USER=root
+            - PMA_PASSWORD=root
+            - MYSQL_ROOT_PASSWORD=root 
+        ports:
+            - 8081:80
+        depends_on:
+            - db
+  
+    
