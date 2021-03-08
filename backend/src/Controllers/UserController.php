@@ -2,6 +2,7 @@
 
 namespace takisrs\Controllers;
 
+use Exception;
 use takisrs\Core\Controller;
 
 use takisrs\Models\User;
@@ -31,6 +32,29 @@ class UserController extends Controller
                 ]
             ]);
         }
+    }
+
+    /**
+     * Retrieves and responses with the fields of the requested user
+     *
+     * @return void
+     */
+    public function single(): void
+    {
+        $user = new User;
+        $user = $user->find($this->request->param("id"));
+        
+        if (!$user)
+            throw new Exception(sprintf("User with id %d not found", $this->request->param("id")));
+
+        $this->response->status(200)->send([
+            "ok" => true,
+            "message" => sprintf("User with id %d retrieved", $user->id),
+            "data" => [
+                "user" => $user
+            ]
+        ]);
+
     }
 
     /**

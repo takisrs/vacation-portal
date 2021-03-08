@@ -70,6 +70,11 @@ class Application extends Model
         return $statement->execute();
     }
 
+    public function user()
+    {
+        return (new User())->find($this->userId);
+    }
+
     public function isApproved()
     {
         return $this->status === self::STATUS_APPROVED;
@@ -92,7 +97,8 @@ class Application extends Model
         return $this->update();
     }
 
-    public function days(){
+    public function days()
+    {
         $dateFrom = new \DateTime($this->dateFrom);
         $dateTo = new \DateTime($this->dateTo);
         return $dateTo->diff($dateFrom)->format("%a");

@@ -27,8 +27,7 @@ export default {
                     token: token,
                     userData : userData
                 })
-                console.log("auto login");
-                router.go(-1);
+                //router.go(-1);
             }
         },
 
@@ -63,7 +62,8 @@ export default {
                     localStorage.setItem('tokenExpiration', now);
                     dispatch('setAutoLogout', 3600);
                     commit('setMessage', { message: data.message, class: 'success'});
-                    router.push(userData.userType == 2 ? '/users' : '/applications');
+                    console.log(router.currentRoute.query.redirect);
+                    router.push(router.currentRoute.query.redirect || (userData.userType == 2 ? '/users' : '/applications'));
                 } else {
                     commit('setMessage', { message: data.message, class: 'error'});
                 }

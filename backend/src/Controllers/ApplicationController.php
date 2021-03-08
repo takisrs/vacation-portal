@@ -5,6 +5,7 @@ namespace takisrs\Controllers;
 use takisrs\Core\Controller;
 use takisrs\Helpers\EmailTemplate;
 use takisrs\Models\Application;
+use takisrs\Models\User;
 
 /**
  * ApplicationController
@@ -19,16 +20,14 @@ class ApplicationController extends Controller
      */
     public function list(): void
     {
-
-        $application = new Application;
-        if ($this->request->user()->isUser()) {
-            $applications = $application->findBy([
-                'userId' => $this->request->user()->id
-            ]);
+        // if the authenticated user is an admin, fetch all the applications else fetch only user's applications
+        if ($this->request->user()->isAdmin()) {
+            $applications = (new Application)->findAll();
         } else {
-            $applications = $application->findAll();
+            $applications = $this->request->user()->applications();
         }
 
+        // add days of vacation to each application object as it needed in the api response
         foreach ($applications as $index => $application)
             $applications[$index]->days = $application->days();
 
@@ -60,16 +59,22 @@ class ApplicationController extends Controller
             $application = $application->create();
 
             if ($application) {
-                // send an email
+
+                // sends an email to all the admins, informing them about the new application
+                $admins = (new User())->findBy(["type" => User::TYPE_ADMIN]);
+
                 $email = new EmailTemplate(dirname(__DIR__) . '/EmailTemplates/submitted.tem.php');
                 $email->replaceVars([
                     'user' => $this->request->user()->firstName . ' ' . $this->request->user()->lastName,
                     'vacation_start' => $application->dateFrom,
                     'vacation_end' => $application->dateTo,
-                    'approve_link' => '<a href="#">Approve</a>',
-                    'reject_link' => '<a href="#">Reject</a>'
+                    'reason' => $application->reason,
+                    'approve_link' => '<a href="http://localhost:8081/applications/' . $application->id . '/approve">Approve</a>',
+                    'reject_link' => '<a href="http://localhost:8081/applications/' . $application->id . '/reject">Reject</a>'
                 ]);
-                $email->send('takispadaz@gmail.com');
+
+                foreach ($admins as $admin)
+                    $email->send($admin->email);
 
                 $this->response->status(200)->send([
                     "ok" => true,
@@ -104,13 +109,16 @@ class ApplicationController extends Controller
 
             if (!isset($application)) throw new \Exception("Application not found");
 
+            // change the status of the application only if is in pending status
+            if ($application->status != Application::STATUS_PENDING)
+                throw new \Exception(sprintf("Application %d has already been %s", $application->id, $application->status == Application::STATUS_APPROVED ? 'approved' : 'rejected'));
+
             $application->approve();
 
-            // send an email
+            // alert the user about the approval of his application
             $email = new EmailTemplate(dirname(__DIR__) . '/EmailTemplates/approved.tem.php');
             $email->replaceVar('submission_date', $application->createdAt);
-            // get the user object to retrieve the email
-            //$email->send("");
+            $email->send($application->user()->email);
 
             $this->response->status(200)->send([
                 "ok" => true,
@@ -142,17 +150,20 @@ class ApplicationController extends Controller
 
             if (!isset($application)) throw new \Exception("Application not found");
 
+            // change the status of the application only if is in pending status
+            if ($application->status != Application::STATUS_PENDING)
+                throw new \Exception(sprintf("Application %d has already been %s", $application->id, $application->status == Application::STATUS_APPROVED ? 'approved' : 'rejected'));
+
             $application->reject();
 
-            // send an email
+            // alert the user with an email about the rejection of his application
             $email = new EmailTemplate(dirname(__DIR__) . '/EmailTemplates/rejected.tem.php');
             $email->replaceVar('submission_date', $application->createdAt);
-            // get the user object to retrieve the email
-            //$email->send("");
+            $email->send($application->user()->email);
 
             $this->response->status(200)->send([
                 "ok" => true,
-                "message" => "Application rejected",
+                "message" => sprintf("Application %d rejected", $application->id),
                 "data" => [
                     "application" => $application
                 ]

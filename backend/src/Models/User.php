@@ -32,6 +32,12 @@ class User extends Model
         return (int) $this->type === self::TYPE_USER;
     }
 
+    public function applications()
+    {
+        $applications = new Application;
+        return $applications->findBy(["userId" => $this->id]);
+    }
+
     public function create()
     {
         $query = "INSERT INTO " . self::$tableName . " (`firstName`, `lastName`, `email`, `password`, `type`, `createdAt`) 

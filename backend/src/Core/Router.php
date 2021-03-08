@@ -38,29 +38,22 @@ class Router
      */
     private function requireAuth(?int $accessLevel = null): void
     {
-        try {
-            $token = $this->request->authorizationToken();
-            if (!empty($token)) {
-                $decodedData = Authenticator::decodeToken($token);
-                if ($decodedData) {
-                    $userId = $decodedData["context"]->user->id;
-                    $user = new User;
-                    $user = $user->find($userId);
-                    if ($user) {
-                        if (!empty($accessLevel) && $user->type != $accessLevel)
-                            throw new \Exception("Not authenticated");
-                        $this->request->setUser($user);
-                    }
+        $token = $this->request->authorizationToken();
+        if (!empty($token)) {
+            $decodedData = Authenticator::decodeToken($token);
+            if ($decodedData) {
+                $userId = $decodedData["context"]->user->id;
+                $user = new User;
+                $user = $user->find($userId);
+                if ($user) {
+                    if (!empty($accessLevel) && $user->type != $accessLevel)
+                        throw new \Exception("Forbidden - Not authorized", 403);
+                    $this->request->setUser($user);
                 }
             }
-            if ($this->request->user() == null) {
-                throw new \Exception("Not authenticated");
-            }
-        } catch (\Exception $e) {
-            $this->response->status(401)->send([
-                "ok" => false,
-                "message" => sprintf("Not authenticated: %s", $e->getMessage())
-            ]);
+        }
+        if ($this->request->user() == null) {
+            throw new \Exception("Not authenticated", 401);
         }
     }
 

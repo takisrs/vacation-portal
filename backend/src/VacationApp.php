@@ -45,6 +45,7 @@ class VacationApp
         // admin routes
         $this->router->get("/users", UserController::class, 'list', Router::REQUIRE_ADMIN);
         $this->router->post("/users", UserController::class, 'create', Router::REQUIRE_ADMIN);
+        $this->router->get("/users/:id", UserController::class, 'single', Router::REQUIRE_ADMIN);
         $this->router->post("/users/:id", UserController::class, 'update', Router::REQUIRE_ADMIN);
         $this->router->post("/applications/:id/approve", ApplicationController::class, 'approve', Router::REQUIRE_ADMIN);
         $this->router->post("/applications/:id/reject", ApplicationController::class, 'reject', Router::REQUIRE_ADMIN);
@@ -63,7 +64,7 @@ class VacationApp
             $this->registerRoutes();
             $this->router->run();
         } catch (\Exception|\Error $e) {
-            $this->response->status(500)->send([
+            $this->response->status($e->getCode())->send([
                 "ok" => false,
                 "message" => sprintf("Error Occured: %s", $e->getMessage())
             ]);

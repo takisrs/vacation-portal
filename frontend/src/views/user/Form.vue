@@ -1,6 +1,6 @@
 <template>
     <div class="box box--sm">
-        <h1 class="box__title">Create a user</h1>
+        <h1 class="box__title">{{ $route.params.id ? "Update user" : "Create a user" }}</h1>
 
         <div class="box__content">
 
@@ -34,7 +34,7 @@
                     </select>
                 </div>
                 <div class="form__group">
-                    <input type="submit" class="btn form__action form__action--right" @click.prevent="createApplication()" value="Submit"/>
+                    <input type="submit" class="btn form__action form__action--right" @click.prevent="createUser()" value="Submit"/>
                 </div>
             </form>
 
@@ -58,8 +58,13 @@ export default {
             userType: ""
         }
     },
+    computed: {
+        token () {
+            return this.$store.getters.token;
+        } 
+    },
     methods: {
-        createApplication() {
+        createUser() {
             if (this.validate([
                 { field: 'firstName', value: this.firstName, rules: ['required'] },
                 { field: 'lastName', value: this.lastName, rules: ['required'] },
@@ -77,6 +82,30 @@ export default {
                 });
             }
         }
+    },
+    created(){
+        fetch(process.env.VUE_APP_ENDPOINT + "/users/" + this.$route.params.id, {
+            headers: {
+                'Authorization': 'Bearer ' + this.token
+            }
+        }).then(response => {
+            //if (response.ok && response.status == 200)
+            return response.json();
+        }).then(body => {
+            if (body.ok) {
+                this.firstName = body.data.user.firstName;
+                this.lastName = body.data.user.lastName;
+                this.email = body.data.user.email;
+                this.userType = body.data.user.type;
+            } else {
+                this.$store.commit('setMessage', {
+                    class: "error", 
+                    message: body.message
+                });
+            }
+        }).catch(error => {
+            console.log(error);
+        });
     },
     mixins: [
         validationMixin

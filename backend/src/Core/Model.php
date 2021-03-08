@@ -2,7 +2,6 @@
 
 namespace takisrs\Core;
 
-use takisrs\DBConnectionInterface;
 use takisrs\MySQLConnection;
 
 /**
