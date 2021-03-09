@@ -4,6 +4,11 @@ namespace takisrs\Models;
 
 use takisrs\Core\Model;
 
+/**
+ * Application Model class
+ * 
+ * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
+ */
 class Application extends Model
 {
     protected string $tableName = 'applications';
@@ -24,60 +29,67 @@ class Application extends Model
     public $createdAt;
     public $modifiedAt;
 
-    /*
-    public function update()
-    {
-        $statement = $this->db->prepare("UPDATE " . $this->tableName . " 
-        SET 
-            userId = :userId, 
-            dateFrom = :dateFrom, 
-            dateTo = :dateTo, 
-            reason = :reason,
-            status = :status
-        WHERE
-            id = :id");
-
-        $statement->bindParam("userId", $this->userId);
-        $statement->bindParam("dateFrom", $this->dateFrom);
-        $statement->bindParam("dateTo", $this->dateTo);
-        $statement->bindParam("reason", $this->reason);
-        $statement->bindParam("id", $this->id);
-        $statement->bindParam("status", $this->status);
-
-        return $statement->execute();
-    }
-*/
-    public function user()
+    /**
+     * Return application's user object
+     *
+     * @return User
+     */
+    public function user(): User
     {
         return (new User())->find($this->userId);
     }
 
-    public function isApproved()
+    /**
+     * Returns true id an application has been approved
+     *
+     * @return boolean
+     */
+    public function isApproved(): bool
     {
         return $this->status === self::STATUS_APPROVED;
     }
 
-    public function isRejected()
+    /**
+     * Returns true if an application has been rejected
+     *
+     * @return boolean
+     */
+    public function isRejected(): bool
     {
         return $this->status === self::STATUS_REJECTED;
     }
 
-    public function approve()
+    /**
+     * Performs the approval to the application
+     *
+     * @return boolean
+     */
+    public function approve(): bool
     {
         $this->status = self::STATUS_APPROVED;
         return $this->update();
     }
 
-    public function reject()
+    /**
+     * Performs the rejection to the application
+     *
+     * @return boolean
+     */
+    public function reject(): bool
     {
         $this->status = self::STATUS_REJECTED;
         return $this->update();
     }
 
-    public function days()
+    /**
+     * Returns the duration of the vacation in days
+     *
+     * @return integer
+     */
+    public function days(): int
     {
         $dateFrom = new \DateTime($this->dateFrom);
         $dateTo = new \DateTime($this->dateTo);
-        return $dateTo->diff($dateFrom)->format("%a");
+        return (int) $dateTo->diff($dateFrom)->format("%a") + 1;
     }
 }

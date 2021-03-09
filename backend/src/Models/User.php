@@ -4,6 +4,11 @@ namespace takisrs\Models;
 
 use takisrs\Core\Model;
 
+/**
+ * User Model class
+ * 
+ * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
+ */
 class User extends Model
 {
     protected string $tableName = 'users';
@@ -22,68 +27,34 @@ class User extends Model
     public $createdAt;
     public $modifiedAt;
 
-    public function isAdmin()
+    /**
+     * Returns true if the user is an admin
+     *
+     * @return boolean
+     */
+    public function isAdmin(): bool
     {
         return (int) $this->type === self::TYPE_ADMIN;
     }
 
-    public function isUser()
+    /**
+     * Returns true if the user is a simple user
+     *
+     * @return boolean
+     */
+    public function isUser(): bool
     {
         return (int) $this->type === self::TYPE_USER;
     }
 
-    public function applications()
+    /**
+     * Returns an array of user's applications
+     *
+     * @return Application[]
+     */
+    public function applications(): array
     {
         $applications = new Application;
         return $applications->findBy(["userId" => $this->id]);
     }
-
-    /*
-    public function create()
-    {
-        $query = "INSERT INTO " . $this->tableName . " (`firstName`, `lastName`, `email`, `password`, `type`, `createdAt`) 
-        VALUES (:firstName, :lastName, :email, :password, :type, :createdAt)";
-
-        $statement = $this->db->prepare($query);
-
-        $result = $statement->execute([
-            ":firstName" => $this->firstName,
-            ":lastName" => $this->lastName,
-            ":email" => $this->email,
-            ":password" => $this->password,
-            ":type" => $this->type,
-            ":createdAt" => $this->createdAt
-        ]);
-
-        if ($result) {
-            $this->id = $this->db->lastInsertId();
-            return $this;
-        }
-
-        return null;
-    }
-    */
-/*
-    public function update()
-    {
-        $statement = $this->db->prepare("UPDATE " . $this->tableName . " 
-        SET 
-            firstName = :firstName, 
-            lastName = :lastName, 
-            email = :email, 
-            password = :password,
-            type = :type
-        WHERE
-            id = :id");
-
-        $statement->bindParam("firstName", $this->firstName);
-        $statement->bindParam("lastName", $this->lastName);
-        $statement->bindParam("email", $this->email);
-        $statement->bindParam("password", $this->password);
-        $statement->bindParam("type", $this->type);
-        $statement->bindParam("id", $this->id);
-
-        return $statement->execute();
-    }
-    */
 }
