@@ -12,7 +12,7 @@ export default {
             if (toValidate.length > 0){
                 for (let i = 0; i < toValidate.length; i++){
                     toValidate[i].rules.forEach(rule => {
-                        valid = this.check(toValidate[i].field, toValidate[i].value, rule) && valid;
+                        valid = this.check(rule, toValidate[i]) && valid;
                     });
                 }
             }
@@ -20,20 +20,28 @@ export default {
             return valid;
 
         },
-        check(field, value, rule){
+        check(rule, data){
             if (rule == 'required'){
-                if (value == ''){
+                if (data.value == ''){
                     this.$store.commit('setMessage', {
                         class:"error", 
-                        message:"The "+field+" field is required"
+                        message:"The " + data.field + " field is required"
                     });
                     return false;
                 }
             } else if (rule == 'email'){
-                if (!EMAIL_REGEX.test(String(value).toLowerCase())){
+                if (!EMAIL_REGEX.test(String(data.value).toLowerCase())){
                     this.$store.commit('setMessage', {
                         class:"error", 
                         message:"Invalid Email"
+                    });
+                    return false;
+                }
+            } else if (rule == 'match'){
+                if (data.value != data.match){
+                    this.$store.commit('setMessage', {
+                        class:"error", 
+                        message:"Passwords do not match"
                     });
                     return false;
                 }

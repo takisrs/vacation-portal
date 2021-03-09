@@ -25,14 +25,14 @@ body {
 .container {
 	max-width: 120rem;
 	margin: auto;
-  position:relative;
+	position: relative;
 }
 
 .header {
 	padding: 1rem 0rem;
 	display: flex;
 	justify-content: space-between;
-	border-bottom: 1px $light solid;
+	border-bottom: 2px $light solid;
 
 	&__title {
 		font-size: 1.5rem;
@@ -44,6 +44,7 @@ body {
 	padding: 1rem;
 	display: flex;
 	justify-content: flex-end;
+	border-radius: 4px;
 
 	a {
 		margin-left: 0.3rem;

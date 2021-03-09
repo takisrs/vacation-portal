@@ -13,7 +13,7 @@
                         <th>Last name</th>
                         <th>Email</th>
                         <th>Type</th>
-                        <th>Edit</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,7 +22,7 @@
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ userTypes[user.type - 1] }}</td>
-                        <td><router-link :to="'/users/edit/'+user.id">edit</router-link></td>
+                        <td><router-link tag="a" class="btn btn--sm" :to="'/users/edit/'+user.id">edit</router-link></td>
                     </tr>
                 </tbody>
             </table>

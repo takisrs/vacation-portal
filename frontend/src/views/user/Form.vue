@@ -15,15 +15,15 @@
                 </div>
                 <div class="form__group">
                     <label for="email" class="form__label">Email</label>
-                    <input id="email" class="form__input" name="email" placeholder="Email..." v-model="email">
+                    <input type="email" id="email" class="form__input" name="email" placeholder="Email..." v-model="email">
                 </div>
                 <div class="form__group">
                     <label for="password" class="form__label">Password</label>
-                    <input id="password" class="form__input" name="password" placeholder="Password..." v-model="password">
+                    <input type="password" id="password" class="form__input" name="password" placeholder="Password..." v-model="password">
                 </div>
                 <div class="form__group">
                     <label for="confirmPassword" class="form__label">Confirm password</label>
-                    <input id="confirmPassword" class="form__input" name="confirmPassword" placeholder="Confirm password..." v-model="confirmPassword">
+                    <input type="password" id="confirmPassword" class="form__input" name="confirmPassword" placeholder="Confirm password..." v-model="confirmPassword">
                 </div>
                 <div class="form__group">
                     <label for="userType" class="form__label">User type</label>
@@ -34,7 +34,7 @@
                     </select>
                 </div>
                 <div class="form__group">
-                    <input type="submit" class="btn form__action form__action--right" @click.prevent="createUser()" value="Submit"/>
+                    <input type="submit" class="btn form__action form__action--right" @click.prevent="$route.params.id ? updateUser() : createUser()" :value="$route.params.id ? 'Update' : 'Create'"/>
                 </div>
             </form>
 
@@ -70,10 +70,29 @@ export default {
                 { field: 'lastName', value: this.lastName, rules: ['required'] },
                 { field: 'email', value: this.email, rules: ['required'] },
                 { field: 'password', value: this.password, rules: ['required'] },
-                { field: 'confirmPassword', value: this.confirmPassword, rules: ['required'] },
+                { field: 'confirmPassword', value: this.confirmPassword, rules: ['required', 'match'], match: this.password },
                 { field: 'userType', value: this.userType, rules: ['required'] },
             ])){
                 this.$store.dispatch("createUser", {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    email: this.email,
+                    password: this.password,
+                    type: this.userType
+                });
+            }
+        },
+        updateUser() {
+            if (this.validate([
+                { field: 'firstName', value: this.firstName, rules: ['required'] },
+                { field: 'lastName', value: this.lastName, rules: ['required'] },
+                { field: 'email', value: this.email, rules: ['required'] },
+                { field: 'password', value: this.password, rules: [''] },
+                { field: 'confirmPassword', value: this.confirmPassword, rules: ['match'], match: this.password },
+                { field: 'userType', value: this.userType, rules: ['required'] },
+            ])){
+                this.$store.dispatch("updateUser", {
+                    id: this.$route.params.id,
                     firstName: this.firstName,
                     lastName: this.lastName,
                     email: this.email,
@@ -90,7 +109,6 @@ export default {
                     'Authorization': 'Bearer ' + this.token
                 }
             }).then(response => {
-                //if (response.ok && response.status == 200)
                 return response.json();
             }).then(body => {
                 if (body.ok) {

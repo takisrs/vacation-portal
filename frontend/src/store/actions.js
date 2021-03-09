@@ -32,6 +32,32 @@ export default {
         });
     },
 
+    updateUser({ state, commit }, payload){
+        
+        fetch(process.env.VUE_APP_ENDPOINT + '/users/' + payload.id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+state.auth.token
+            },
+            body: JSON.stringify({
+                ...payload
+            })
+        }).then(response => {
+            return response.json();
+        }).then(data => {
+            if (data.ok) {
+                commit('setMessage', { message: data.message, class: 'success'});
+            } else {
+                commit('setMessage', { message: data.message, class: 'error'});
+            }
+            router.push('/users');
+        }).catch(error => {
+            commit('setMessage', { message: error.message, class: 'error'});
+            router.push('/users');
+        });
+    },
+
     createApplication({ state, commit }, payload){
         
         fetch(process.env.VUE_APP_ENDPOINT + '/applications', {

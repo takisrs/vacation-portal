@@ -21,6 +21,7 @@ const routes = [
 		},
 		meta: {
 			requireAuthentication: true,
+			title: "Home"
 		},
 	},
 	{
@@ -29,6 +30,7 @@ const routes = [
 		component: Login,
 		meta: {
 			requireAuthentication: false,
+			title: "Login"
 		},
 	},
 	{
@@ -37,6 +39,7 @@ const routes = [
 		component: ApplicationList,
 		meta: {
 			requireAuthentication: true,
+			title: "Applications"
 		},
 	},
 	{
@@ -45,6 +48,7 @@ const routes = [
 		component: ApplicationForm,
 		meta: {
 			requireAuthentication: true,
+			title: "Create application"
 		},
 	},
 	{
@@ -56,6 +60,7 @@ const routes = [
 		meta: {
 			requireAuthentication: true,
 			requireAdmin: true,
+			title: "Approve application"
 		},
 	},
 	{
@@ -67,6 +72,7 @@ const routes = [
 		meta: {
 			requireAuthentication: true,
 			requireAdmin: true,
+			title: "Reject application"
 		},
 	},
 	{
@@ -76,6 +82,7 @@ const routes = [
 		meta: {
 			requireAuthentication: true,
 			requireAdmin: true,
+			title: "Users"
 		},
 	},
 	{
@@ -85,6 +92,7 @@ const routes = [
 		meta: {
 			requireAuthentication: true,
 			requireAdmin: true,
+			title: "Add User"
 		},
 	},
 	{
@@ -94,6 +102,7 @@ const routes = [
 		meta: {
 			requireAuthentication: true,
 			requireAdmin: true,
+			title: "Edit User"
 		},
 	},
 ];
@@ -104,6 +113,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach(function(to, from, next) {
+	document.title = to.meta.title;
 	store.dispatch("checkAutoLogin").then(() => {
 		if (to.meta.requireAdmin && !store.getters.isAdmin) {
 			store.commit("setMessage", { message: "Admin privileges required to perform this action. Please login!", class: "error" });
