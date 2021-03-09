@@ -2,7 +2,7 @@
 
 namespace takisrs\Controllers;
 
-use Exception;
+use takisrs\Core\HttpException;
 use takisrs\Core\Controller;
 
 use takisrs\Models\User;
@@ -22,8 +22,8 @@ class UserController extends Controller
     {
         $user = new User;
         $users = $user->findAll();
-        
-        if (count($users) > 0){
+
+        if (count($users) > 0) {
             $this->response->status(200)->send([
                 "ok" => true,
                 "message" => sprintf("Retrieved %d users", count($users)),
@@ -43,9 +43,9 @@ class UserController extends Controller
     {
         $user = new User;
         $user = $user->find($this->request->param("id"));
-        
+
         if (!$user)
-            throw new Exception(sprintf("User with id %d not found", $this->request->param("id")));
+            throw new HttpException(404, sprintf("User with id %d not found", $this->request->param("id")));
 
         $this->response->status(200)->send([
             "ok" => true,
@@ -54,7 +54,6 @@ class UserController extends Controller
                 "user" => $user
             ]
         ]);
-
     }
 
     /**
@@ -64,34 +63,25 @@ class UserController extends Controller
      */
     public function create(): void
     {
-        try {
-            $user = new User;
-            $user->firstName = $this->request->body('firstName');
-            $user->lastName = $this->request->body('lastName');
-            $user->email = $this->request->body('email');
-            $user->password = md5($this->request->body('password'));
-            $user->type = $this->request->body('type');
-            $user->createdAt = (new \DateTime('now'))->format("Y-m-d H:i:s");
+        $user = new User;
+        $user->firstName = $this->request->body('firstName');
+        $user->lastName = $this->request->body('lastName');
+        $user->email = $this->request->body('email');
+        $user->password = md5($this->request->body('password'));
+        $user->type = $this->request->body('type');
+        $user->createdAt = (new \DateTime('now'))->format("Y-m-d H:i:s");
 
-            $user = $user->create();
+        $user = $user->create();
 
-            if ($user) {
-                $this->response->status(200)->send([
-                    "ok" => true,
-                    "message" => "User created successfully",
-                    "data" => [
-                        "user" => $user
-                    ]
-                ]);
-            } else {
-                throw new \Exception("User not created");
-            }
-        } catch (\Exception $e) {
-            $this->response->status(401)->send([
-                "ok" => false,
-                "message" => sprintf("User's creation failed: %s", $e->getMessage())
-            ]);
-        }
+        if (!$user) throw new HttpException(401, "The user wasn't created");
+
+        $this->response->status(200)->send([
+            "ok" => true,
+            "message" => "User created successfully",
+            "data" => [
+                "user" => $user
+            ]
+        ]);
     }
 
 
@@ -106,35 +96,31 @@ class UserController extends Controller
             $user = new User;
             $user = $user->find($this->request->param("id"));
 
+            if (!isset($user)) throw new HttpException(404, "User not found");
+
             $firstName = $this->request->body("firstName");
             $lastName = $this->request->body("lastName");
             $email = $this->request->body("email");
             $password = $this->request->body("password");
             $type = $this->request->body("type");
-            
+
             if ($firstName) $user->firstName = $firstName;
             if ($lastName) $user->lastName = $lastName;
             if ($email) $user->email = $email;
             if ($password) $user->password = md5($password);
             if ($type) $user->type = $type;
 
-            if (!isset($user)) throw new \Exception("User not found");
-
             $user->update();
-            
+
             $this->response->status(200)->send([
                 "ok" => true,
-                "message" => "User updated",
+                "message" => "User was updated",
                 "data" => [
                     "user" => $user
                 ]
             ]);
         } catch (\Exception $e) {
-            $this->response->status(401)->send([
-                "ok" => true,
-                "message" => sprintf("User update failed: %s", $e->getMessage())
-            ]);
+            throw new HttpException($e->getCode() ?: 400, sprintf("The user wasn't updated. Error: %s", $e->getMessage()));
         }
-
     }
 }

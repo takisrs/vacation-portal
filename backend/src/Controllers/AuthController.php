@@ -28,11 +28,11 @@ class AuthController extends Controller
             'password' => md5($this->request->body('password'))
         ]);
 
-        if ($user){
+        if ($user) {
             $token = Authenticator::getToken([
                 "iss" => "Panos",
                 "iat" => time(),
-                "exp" => time()+60*60,
+                "exp" => time() + 60 * 60,
                 "context" => [
                     "user" => [
                         "id" => $user->id,
@@ -43,17 +43,17 @@ class AuthController extends Controller
             ]);
             $this->response->status(200)->send([
                 "ok" => true,
-                "message" => "User loggedin successfully",
+                "message" => "You logged in successfully",
                 "data" => [
                     "token" => $token,
                     "user" => $user
                 ]
             ]);
+        } else {
+            $this->response->status(401)->send([
+                "ok" => false,
+                "message" => "Login failed. Wrong username or password"
+            ]);
         }
-
-        $this->response->status(401)->send([
-            "ok" => false,
-            "message" => "Login failed. Wrong username or password"
-        ]);
     }
 }

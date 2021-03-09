@@ -53,7 +53,7 @@ class Request
      * @param string $key
      * @return mixed
      */
-    public function param(string $key)
+    public function param(?string $key = null)
     {
         if (!empty($key))
             return isset($this->params[$key]) ? $this->clean($this->params[$key]) : null;

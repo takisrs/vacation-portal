@@ -63,9 +63,15 @@ class VacationApp
         try {
             $this->registerRoutes();
             $this->router->run();
-        } catch (\Exception|\Error $e) {
+        } catch (\takisrs\Core\HttpException $e){
             $this->response->status($e->getCode())->send([
                 "ok" => false,
+                "message" => $e->getMessage()
+            ]);
+        } catch (\Exception|\Error $e) {
+            $this->response->status(500)->send([
+                "ok" => false,
+                //you may exclude the exception message from the response for security reasons
                 "message" => sprintf("Error Occured: %s", $e->getMessage())
             ]);
         }

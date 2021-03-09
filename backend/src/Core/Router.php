@@ -2,6 +2,7 @@
 
 namespace takisrs\Core;
 
+use takisrs\Core\HttpException;
 use takisrs\Models\User;
 
 /**
@@ -47,13 +48,13 @@ class Router
                 $user = $user->find($userId);
                 if ($user) {
                     if (!empty($accessLevel) && $user->type != $accessLevel)
-                        throw new \Exception("Forbidden - Not authorized", 403);
+                        throw new HttpException(403, "Forbidden - Not authorized");
                     $this->request->setUser($user);
                 }
             }
         }
         if ($this->request->user() == null) {
-            throw new \Exception("Not authenticated", 401);
+            throw new HttpException(401, "Not authenticated");
         }
     }
 
@@ -163,10 +164,12 @@ class Router
         $uri = $this->request->getUri();
         $method = $this->request->getMethod();
 
+        // if it is an options request send 200 with the headers
         if ($method === "OPTIONS"){
             $this->response->status(200)->send("");
         }
 
+        // match the request method/uri with one of the available routes
         $matchedRoutes = array_filter($this->routes, function ($route) use ($method) {
             return $route["method"] == $method;
         });
@@ -176,8 +179,8 @@ class Router
         });
 
         $matchedRoute = reset($matchedRoutes);
-        $params = [];
 
+        // if there is a match, checks if the authorized user has the required permissions and then executes the corresponding action (controller@method)
         if ($matchedRoute){
             if (isset($matchedRoute["access"]) && $matchedRoute["access"] > 0) {
                 $this->requireAuth($matchedRoute["access"]);
@@ -186,14 +189,11 @@ class Router
             $controller = new $matchedRoute["controller"]($this->request, $this->response);
     
             if (is_callable([$controller, $matchedRoute["action"]]))
-                call_user_func([$controller, $matchedRoute["action"]], $params);
+                call_user_func([$controller, $matchedRoute["action"]]);
             else
-                throw new \Exception("Controller action not found " . $matchedRoute["controller"] . "@" . $matchedRoute["action"]);
+                throw new HttpException(400, sprintf("Controller action not found %s@%s", $matchedRoute["controller"], $matchedRoute["action"]));
         } else {
-            $this->response->status(404)->send([
-                "ok" => false,
-                "message" => sprintf("No matching route for %s - %s", $uri, $method)
-            ]);
+            throw new HttpException(404, sprintf("No matching route for %s - %s", $uri, $method));
         }
 
     }

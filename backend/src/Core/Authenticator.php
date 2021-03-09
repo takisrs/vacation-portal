@@ -3,6 +3,7 @@
 namespace takisrs\Core;
 
 use \Firebase\JWT\JWT;
+use \Firebase\JWT\ExpiredException;
 
 /**
  * A class that handles the tasks related to JWT authorization
@@ -40,7 +41,10 @@ class Authenticator
      */
     public static function decodeToken(string $jwt): array
     {
-        return (array) JWT::decode($jwt, self::KEY, self::ALLOWED_ALGORITHMS);
+        try {
+            return (array) JWT::decode($jwt, self::KEY, self::ALLOWED_ALGORITHMS);
+        } catch (ExpiredException $e) {
+            throw new HttpException(401, $e->getMessage());
+        }
     }
-
 }
