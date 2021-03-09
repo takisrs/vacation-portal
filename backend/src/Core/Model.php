@@ -56,14 +56,15 @@ class Model
      * Retrieves a list of records of the database and return an object for each record
      *
      * @param array $params
+     * @param string $sort sql ordering option
      * @return array|null array of objects
      */
-    public function findBy(array $params): ?array
+    public function findBy(array $params, ?string $sort = null): ?array
     {
         $objects = [];
 
         list($where, $bindParams) = $this->buildWhere($params);
-        $query = "SELECT * FROM " . $this->tableName . " WHERE " . $where;
+        $query = "SELECT * FROM " . $this->tableName . " WHERE " . $where . (isset($sort) ? " ORDER BY " . $sort : "");
         $statement = $this->db->prepare($query);
         $statement->execute($bindParams);
         if ($statement->rowCount() > 0) {
@@ -79,13 +80,14 @@ class Model
     /**
      * Retrieves all the records of the corresponding table from the database
      *
+     * @param string $sort sql ordering option
      * @return array
      */
-    public function findAll(): array
+    public function findAll(?string $sort = null): array
     {
         $objects = [];
 
-        $query = "SELECT * FROM " . $this->tableName;
+        $query = "SELECT * FROM " . $this->tableName . (isset($sort) ? " ORDER BY " . $sort : "");
         $result = $this->db->query($query);
         foreach ($result as $row) {
             array_push($objects, $this->mapResultToObject($row));

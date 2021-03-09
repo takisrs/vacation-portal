@@ -23,7 +23,7 @@ class ApplicationController extends Controller
     {
         // if the authenticated user is an admin, fetch all the applications else fetch only user's applications
         if ($this->request->user()->isAdmin()) {
-            $applications = (new Application)->findAll();
+            $applications = (new Application)->findAll('createdAt DESC');
         } else {
             $applications = $this->request->user()->applications();
         }

@@ -16,8 +16,8 @@ class Application extends Model
     protected array $fillable = ["userId", "dateFrom", "dateTo", "reason", "status", "createdAt"];
 
     const STATUS_PENDING = 0;
-    const STATUS_REJECTED = 1;
-    const STATUS_APPROVED = 2;
+    const STATUS_APPROVED = 1;
+    const STATUS_REJECTED = 2;
 
     public $id;
     public $userId;

@@ -50,11 +50,11 @@ class User extends Model
     /**
      * Returns an array of user's applications
      *
-     * @return Application[]
+     * @return Application[]|null
      */
-    public function applications(): array
+    public function applications(): ?array
     {
         $applications = new Application;
-        return $applications->findBy(["userId" => $this->id]);
+        return $applications->findBy(["userId" => $this->id], "createdAt DESC");
     }
 }
