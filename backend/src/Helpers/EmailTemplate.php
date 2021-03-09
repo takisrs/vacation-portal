@@ -6,6 +6,11 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
+/**
+ * Handles email templating and sending
+ * 
+ * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
+ */
 class EmailTemplate
 {
     private $templatePath;
@@ -22,40 +27,80 @@ class EmailTemplate
         $this->extractSubject();
     }
 
-    private function loadBody()
+    /**
+     * Loads the html content of the template file
+     *
+     * @return void
+     */
+    private function loadBody(): void
     {
         $this->body = file_get_contents($this->templatePath);
     }
 
-    private function extractSubject()
+    /**
+     * Extracts the email subject from the title tag of the html page
+     *
+     * @return void
+     */
+    private function extractSubject(): void
     {
         preg_match("/<title>(.*)<\/title>/siU", $this->body, $titleMatches);
         $this->subject = $titleMatches[1];
     }
 
-    public function replaceVar($key, $value)
+    /**
+     * Replaces a variable in the html content with the provided value
+     *
+     * @param string $key the variable name
+     * @param string|int $value the actual value
+     * @return self
+     */
+    public function replaceVar($key, $value): self
     {
         $this->body = str_replace("{" . $key . "}", $value, $this->body);
         return $this;
     }
 
-    public function replaceVars($data)
+    /**
+     * Replaces all the variables in the html content of the email template
+     *
+     * @param array $data
+     * @return self
+     */
+    public function replaceVars($data): self
     {
         foreach ($data as $key => $value)
             $this->replaceVar($key, $value);
+        return $this;
     }
 
-    public function getSubject()
+    /**
+     * Returns email's subject
+     *
+     * @return string
+     */
+    public function getSubject(): string
     {
         return $this->subject;
     }
 
-    public function getBody()
+    /**
+     * Returns email's body
+     *
+     * @return string
+     */
+    public function getBody(): string
     {
         return $this->body;
     }
 
-    public function send($email)
+    /**
+     * Sends the email
+     *
+     * @param string $email the recipient
+     * @return void
+     */
+    public function send(string $email): void
     {
         $mail = new PHPMailer();
 
@@ -63,15 +108,15 @@ class EmailTemplate
             //Server settings
             $mail->SMTPDebug = SMTP::DEBUG_OFF;
             $mail->isSMTP();
-            $mail->Host       = 'smtp.mailtrap.io';
+            $mail->Host       = $_ENV['SMTP_HOST'];
             $mail->SMTPAuth   = true;
-            $mail->Username   = '1b3b31c3f8e075';
-            $mail->Password   = '4119bd75e6978b';
+            $mail->Username   = $_ENV['SMTP_USER'];
+            $mail->Password   = $_ENV['SMTP_PASS'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 25;
+            $mail->Port       = $_ENV['SMTP_PORT'];
 
             //Recipients
-            $mail->setFrom('takispadaz@gmail.com', 'Panos Pantazopoulos');
+            $mail->setFrom($_ENV['FROM_EMAIL'], $_ENV['FROM_NAME']);
             $mail->addAddress($email);
 
             //Content
@@ -81,9 +126,9 @@ class EmailTemplate
             $mail->AltBody = strip_tags($this->getBody());
 
             $mail->send();
-            //echo 'Message has been sent';
+
         } catch (Exception $e) {
-            //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            // Do nothing right now. You could log an error though.
         }
 
     }

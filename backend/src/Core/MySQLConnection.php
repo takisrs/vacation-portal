@@ -12,10 +12,10 @@ class MySQLConnection
     private static $instance = null;
     private $connection;
 
-    public function __construct($dbhost = 'db', $dbuser = 'epignosis', $dbpass = 'epignosis', $dbname = 'vacation', $charset = 'utf8')
+    public function __construct()
     {
-        $dsn = "mysql:host=" . $dbhost . ";dbname=" . $dbname . ";charset=" . $charset;
-        $conn = new \PDO($dsn, $dbuser, $dbpass);
+        $dsn = "mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . ";charset=" . $_ENV['DB_CHARSET'];
+        $conn = new \PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASS']);
 
         $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 

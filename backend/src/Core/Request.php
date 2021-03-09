@@ -13,7 +13,7 @@ class Request
     private array $params = [];
 
     /**
-     * sets the authentication user
+     * Sets the authentication user
      *
      * @param \takisrs\Models\User $user a user's object
      * @return Request

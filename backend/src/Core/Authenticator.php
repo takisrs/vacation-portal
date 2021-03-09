@@ -7,16 +7,11 @@ use \Firebase\JWT\ExpiredException;
 
 /**
  * A class that handles the tasks related to JWT authorization
+ * 
  * @author Panagiots Pantazopoulos <takispadaz@gmail.com>
  */
 class Authenticator
 {
-
-    /**
-     * The key to be used for the token encoding, decoding
-     */
-    const KEY = "aSUPERsecureKEY";
-
     /**
      * Allowed algorithms for decoding a token
      */
@@ -30,7 +25,7 @@ class Authenticator
      */
     public static function getToken(array $payload): string
     {
-        return JWT::encode($payload, self::KEY);
+        return JWT::encode($payload, $_ENV['JWT_SECRET']);
     }
 
     /**
@@ -42,7 +37,7 @@ class Authenticator
     public static function decodeToken(string $jwt): array
     {
         try {
-            return (array) JWT::decode($jwt, self::KEY, self::ALLOWED_ALGORITHMS);
+            return (array) JWT::decode($jwt, $_ENV['JWT_SECRET'], self::ALLOWED_ALGORITHMS);
         } catch (ExpiredException $e) {
             throw new HttpException(401, $e->getMessage());
         }

@@ -70,8 +70,8 @@ class ApplicationController extends Controller
             'vacation_start' => $application->dateFrom,
             'vacation_end' => $application->dateTo,
             'reason' => $application->reason,
-            'approve_link' => '<a href="http://localhost:8080/applications/' . $application->id . '/approve">Approve</a>',
-            'reject_link' => '<a href="http://localhost:8080/applications/' . $application->id . '/reject">Reject</a>'
+            'approve_link' => '<a href="' . $_ENV['FRONTEND_URL'] . '/applications/' . $application->id . '/approve">Approve</a>',
+            'reject_link' => '<a href="' . $_ENV['FRONTEND_URL'] . '/applications/' . $application->id . '/reject">Reject</a>'
         ]);
 
         foreach ($admins as $admin)
@@ -109,8 +109,7 @@ class ApplicationController extends Controller
 
         // alert the user about the approval of his application
         $email = new EmailTemplate(dirname(__DIR__) . '/EmailTemplates/approved.tem.php');
-        $email->replaceVar('submission_date', $application->createdAt);
-        $email->send($application->user()->email);
+        $email->replaceVar('submission_date', $application->createdAt)->send($application->user()->email);
 
         $this->response->status(200)->send([
             "ok" => true,
@@ -143,8 +142,7 @@ class ApplicationController extends Controller
 
         // alert the user with an email about the rejection of his application
         $email = new EmailTemplate(dirname(__DIR__) . '/EmailTemplates/rejected.tem.php');
-        $email->replaceVar('submission_date', $application->createdAt);
-        $email->send($application->user()->email);
+        $email->replaceVar('submission_date', $application->createdAt)->send($application->user()->email);
 
         $this->response->status(200)->send([
             "ok" => true,

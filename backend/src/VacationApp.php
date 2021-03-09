@@ -5,6 +5,7 @@ namespace takisrs;
 use takisrs\Core\Request;
 use takisrs\Core\Response;
 use takisrs\Core\Router;
+use takisrs\Core\HttpException;
 
 use takisrs\Controllers\AuthController;
 use takisrs\Controllers\ApplicationController;
@@ -63,7 +64,7 @@ class VacationApp
         try {
             $this->registerRoutes();
             $this->router->run();
-        } catch (\takisrs\Core\HttpException $e){
+        } catch (HttpException $e){
             $this->response->status($e->getCode())->send([
                 "ok" => false,
                 "message" => $e->getMessage()

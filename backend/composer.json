@@ -28,6 +28,7 @@
     },
     "require": {
         "firebase/php-jwt": "^5.2",
-        "phpmailer/phpmailer": "^6.3"
+        "phpmailer/phpmailer": "^6.3",
+        "vlucas/phpdotenv": "^5.3"
     }
 }
