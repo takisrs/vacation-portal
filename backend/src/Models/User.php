@@ -6,9 +6,9 @@ use takisrs\Core\Model;
 
 class User extends Model
 {
-    protected static string $tableName = 'users';
-    protected static string $primaryKey = 'id';
-    protected static array $fields = ["id", "firstName", "lastName", "email", "password", "type", "createdAt"];
+    protected string $tableName = 'users';
+    protected string $primaryKey = 'id';
+    protected array $fillable = ["firstName", "lastName", "email", "password", "type", "createdAt"];
 
     const TYPE_USER = 1;
     const TYPE_ADMIN = 2;
@@ -38,9 +38,10 @@ class User extends Model
         return $applications->findBy(["userId" => $this->id]);
     }
 
+    /*
     public function create()
     {
-        $query = "INSERT INTO " . self::$tableName . " (`firstName`, `lastName`, `email`, `password`, `type`, `createdAt`) 
+        $query = "INSERT INTO " . $this->tableName . " (`firstName`, `lastName`, `email`, `password`, `type`, `createdAt`) 
         VALUES (:firstName, :lastName, :email, :password, :type, :createdAt)";
 
         $statement = $this->db->prepare($query);
@@ -61,10 +62,11 @@ class User extends Model
 
         return null;
     }
-
+    */
+/*
     public function update()
     {
-        $statement = $this->db->prepare("UPDATE " . self::$tableName . " 
+        $statement = $this->db->prepare("UPDATE " . $this->tableName . " 
         SET 
             firstName = :firstName, 
             lastName = :lastName, 
@@ -83,4 +85,5 @@ class User extends Model
 
         return $statement->execute();
     }
+    */
 }

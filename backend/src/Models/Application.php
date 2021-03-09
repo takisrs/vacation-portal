@@ -6,9 +6,9 @@ use takisrs\Core\Model;
 
 class Application extends Model
 {
-    protected static string $tableName = 'applications';
-    protected static string $primaryKey = 'id';
-    protected static array $fields = ["id", "userId", "dateFrom", "dateTo", "reason", "status", "createdAt"];
+    protected string $tableName = 'applications';
+    protected string $primaryKey = 'id';
+    protected array $fillable = ["userId", "dateFrom", "dateTo", "reason", "status", "createdAt"];
 
     const STATUS_PENDING = 0;
     const STATUS_REJECTED = 1;
@@ -24,33 +24,10 @@ class Application extends Model
     public $createdAt;
     public $modifiedAt;
 
-    public function create()
-    {
-        $query = "INSERT INTO " . self::$tableName . " (`userId`, `dateFrom`, `dateTo`, `reason`, `status`, `createdAt`) 
-        VALUES (:userId, :dateFrom, :dateTo, :reason, :status, :createdAt)";
-
-        $statement = $this->db->prepare($query);
-
-        $result = $statement->execute([
-            ":userId" => $this->userId,
-            ":dateFrom" => $this->dateFrom,
-            ":dateTo" => $this->dateTo,
-            ":reason" => $this->reason,
-            ":status" => $this->status,
-            ":createdAt" => $this->createdAt
-        ]);
-
-        if ($result) {
-            $this->id = $this->db->lastInsertId();
-            return $this;
-        }
-
-        return null;
-    }
-
+    /*
     public function update()
     {
-        $statement = $this->db->prepare("UPDATE " . self::$tableName . " 
+        $statement = $this->db->prepare("UPDATE " . $this->tableName . " 
         SET 
             userId = :userId, 
             dateFrom = :dateFrom, 
@@ -69,7 +46,7 @@ class Application extends Model
 
         return $statement->execute();
     }
-
+*/
     public function user()
     {
         return (new User())->find($this->userId);

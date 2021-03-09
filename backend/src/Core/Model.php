@@ -2,45 +2,68 @@
 
 namespace takisrs\Core;
 
-use takisrs\MySQLConnection;
+use takisrs\Core\MySQLConnection;
 
 /**
  * Base Controller class
  * 
  * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
  */
-class Model implements ModelInterface
+class Model
 {
-    protected $db;
+    /**
+     * An instance of the mysql database PDO connection
+     *
+     * @var \PDO
+     */
+    protected \PDO $db;
 
     public function __construct()
     {
         $this->db = MySQLConnection::getInstance()->getConnection();
     }
 
+    /**
+     * Accepts an id and retrieves the corresponding record from the database
+     *
+     * @param integer $id
+     * @return object|null
+     */
     public function find(int $id): ?object
     {
-        $query = "SELECT * FROM " . get_called_class()::$tableName . " WHERE " . get_called_class()::$primaryKey . " = :id";
+        $query = "SELECT * FROM " . $this->tableName . " WHERE " . $this->primaryKey . " = :id";
         $statement = $this->db->prepare($query);
         $statement->execute([':id' => $id]);
-        return $statement->rowCount() === 1 ? $this->mapResultToObject($statement->fetch(\PDO::FETCH_ASSOC)) : null;
+        return $statement->rowCount() === 1 ? $this->mapResultToObject($statement->fetch(\PDO::FETCH_ASSOC), $this) : null;
     }
 
+    /**
+     * Retrieves a record from the database
+     *
+     * @param array $params
+     * @return object|null
+     */
     public function findOneBy(array $params): ?object
     {
         list($where, $bindParams) = $this->buildWhere($params);
-        $query = "SELECT * FROM " . get_called_class()::$tableName . " WHERE " . $where;
+        $query = "SELECT * FROM " . $this->tableName . " WHERE " . $where;
         $statement = $this->db->prepare($query);
         $statement->execute($bindParams);
         return $statement->rowCount() === 1 ? $this->mapResultToObject($statement->fetch(\PDO::FETCH_ASSOC)) : null;
     }
 
+    /**
+     * Retrieves a list of records of the database and return an object for each record
+     *
+     * @param array $params
+     * @return array|null array of objects
+     */
     public function findBy(array $params): ?array
     {
         $objects = [];
 
         list($where, $bindParams) = $this->buildWhere($params);
-        $query = "SELECT * FROM " . get_called_class()::$tableName . " WHERE " . $where;
+        $query = "SELECT * FROM " . $this->tableName . " WHERE " . $where;
         $statement = $this->db->prepare($query);
         $statement->execute($bindParams);
         if ($statement->rowCount() > 0) {
@@ -53,11 +76,16 @@ class Model implements ModelInterface
         return null;
     }
 
+    /**
+     * Retrieves all the records of the corresponding table from the database
+     *
+     * @return array
+     */
     public function findAll(): array
     {
         $objects = [];
 
-        $query = "SELECT * FROM " . get_called_class()::$tableName;
+        $query = "SELECT * FROM " . $this->tableName;
         $result = $this->db->query($query);
         foreach ($result as $row) {
             array_push($objects, $this->mapResultToObject($row));
@@ -65,14 +93,61 @@ class Model implements ModelInterface
         return $objects;
     }
 
-    public function create()
+    /**
+     * Performs an insert query
+     *
+     * @return object|null
+     */
+    public function create(): ?object
     {
-        $values = [];
-        foreach (get_called_class()::$fields as $field) {
-            array_push($values, $this->$field);
+        $bindParams = $this->getBindParams();
+
+        $query = "INSERT INTO " . $this->tableName . "(" . implode(', ', $this->fillable) . ") 
+        VALUES (" . implode(', ', array_keys($bindParams)) . ")";
+
+        $statement = $this->db->prepare($query);
+
+        $result = $statement->execute($bindParams);
+
+        if ($result) {
+            $this->id = $this->db->lastInsertId();
+            return $this;
         }
-        echo "(" . implode(', ', get_called_class()::$fields) . ") VALUES (" . implode(', ', $values) . ")";
-        //$query = "INSERT INTO ".get_called_class()::$tableName
+
+        return null;
+    }
+
+    /**
+     * Performs an update query
+     *
+     * @return bool
+     */
+    public function update(): bool
+    {
+        $setParams = [];
+        foreach ($this->fillable as $field) {
+            array_push($setParams, $field . ' = :' . $field);
+        }
+
+        $query = "UPDATE " . $this->tableName . " SET " . implode(", ", $setParams) . " WHERE " . $this->primaryKey . " = " . $this->{$this->primaryKey};
+
+        $statement = $this->db->prepare($query);
+
+        return $statement->execute($this->getBindParams());
+    }
+
+    /**
+     * Returns an array with the pdo bindings
+     *
+     * @return array
+     */
+    protected function getBindParams(): array
+    {
+        $bindParams = [];
+        foreach ($this->fillable as $field) {
+            $bindParams[':' . $field] = $this->$field;
+        }
+        return $bindParams;
     }
 
     /**
@@ -84,12 +159,12 @@ class Model implements ModelInterface
     protected function buildWhere($params): array
     {
         $whereClause = [];
-        $bindParams = [];
+        $whereBindParams = [];
         foreach ($params as $key => $value) {
             array_push($whereClause, $key . " = :" . $key);
-            $bindParams[":" . $key] = $value;
+            $whereBindParams[":" . $key] = $value;
         }
-        return [implode(" AND ", $whereClause), $bindParams];
+        return [implode(" AND ", $whereClause), $whereBindParams];
     }
 
     /**
@@ -98,10 +173,12 @@ class Model implements ModelInterface
      * @param array $record
      * @return object
      */
-    protected function mapResultToObject($record): object
+    protected function mapResultToObject($record, ?object $object = null): object
     {
-        $objectClass = get_called_class();
-        $object = new $objectClass;
+        if (!$object) {
+            $objectClass = get_called_class();
+            $object = new $objectClass;
+        }
         foreach ($record as $field => $value) {
             if (property_exists($object, $field))
                 $object->$field = $value;
