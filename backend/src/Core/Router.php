@@ -12,7 +12,7 @@ use takisrs\Models\User;
  */
 class Router
 {
-    const REQUIRE_AUTH = 1;
+    const REQUIRE_USER = 1;
     const REQUIRE_ADMIN = 2;
 
     private array $routes = [];
@@ -44,8 +44,7 @@ class Router
             $decodedData = Authenticator::decodeToken($token);
             if ($decodedData) {
                 $userId = $decodedData["context"]->user->id;
-                $user = new User;
-                $user = $user->find($userId);
+                $user = (new User)->find($userId);
                 if ($user) {
                     if (!empty($accessLevel) && $user->type != $accessLevel)
                         throw new HttpException(403, "Forbidden - Not authorized");

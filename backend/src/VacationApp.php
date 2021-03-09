@@ -29,7 +29,7 @@ class VacationApp
     }
 
     /**
-     * Declares the routes that the application use
+     * Declares the routes that the app uses
      *
      * @return void
      */
@@ -39,8 +39,8 @@ class VacationApp
         $this->router->post("/auth/login", AuthController::class, 'login');
 
         // user routes
-        $this->router->post("/applications", ApplicationController::class, 'create', Router::REQUIRE_AUTH);
-        $this->router->get("/applications", ApplicationController::class, 'list', Router::REQUIRE_AUTH);
+        $this->router->post("/applications", ApplicationController::class, 'create', Router::REQUIRE_USER);
+        $this->router->get("/applications", ApplicationController::class, 'list', Router::REQUIRE_USER);
 
         // admin routes
         $this->router->get("/users", UserController::class, 'list', Router::REQUIRE_ADMIN);
@@ -54,7 +54,7 @@ class VacationApp
     /**
      * App's main method. All starts here.
      * 
-     * It wraps all the execution in a try/catch block to catch any unhandled exeption and return a valid json response to the client.
+     * It wraps all the execution in a try/catch block to catch any unhandled exeption and return a meaningful json response to the client.
      *
      * @return void
      */
@@ -71,7 +71,7 @@ class VacationApp
         } catch (\Exception|\Error $e) {
             $this->response->status(500)->send([
                 "ok" => false,
-                //you may exclude the exception message from the response for security reasons
+                //we may exclude the exception message in the response for security reasons
                 "message" => sprintf("Error Occured: %s", $e->getMessage())
             ]);
         }
