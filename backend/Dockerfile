@@ -27,3 +27,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Change workdir to apache root
 WORKDIR /var/www/html
+
+# Copy source files to the image
+COPY . .
+
+# Install dependencies
+RUN composer install
