@@ -8,7 +8,7 @@ Below you will find the nessasary documentation with instructions on how to run 
     ├── backend                 # Source files of the backend
     │   ├── eer-diagram         # An EER diagram of the database schema
     |   ├── sql                 # A Database dump
-    |   ├── .env.example        # An example .env file for the required environment variables
+    |   ├── .env.sample         # An sample .env file for the required environment variables
     |   ├── ...
     ├── frontend                # Source files of the frontend
     │   ├── ...                 
@@ -37,12 +37,12 @@ You have the option to use the provided docker setup or run in manually.
 ### Docker
 Let's start with docker, as it is the easiest option. Just run the command below or follow the detailed instructions:
 ```sh
-git clone https://github.com/takisrs/vacation-portal.git && cd vacation-portal && mv backend/.env.example backend/.env && docker-compose up
+git clone https://github.com/takisrs/vacation-portal.git && cd vacation-portal && mv backend/.env.sample backend/.env && docker-compose up
 ```
 Detailed instructions:
 1. Clone this repo `git clone https://github.com/takisrs/vacation-portal.git`  
 2. Move to the project's folder `cd vacation-portal` 
-3. Rename the provided example .env file located in the backend folder which keeps the nessasary configuration `mv backend/.env.example backend/.env`. It is safe to keep the defaults.  
+3. Rename the provided sample .env file located in the backend folder which keeps the nessasary configuration `mv backend/.env.sample backend/.env`. It is safe to keep the defaults.  
 4. Build the images and spin up the containers with `docker-compose up`
 5. You can access the frontend at http://localhost:8080
 
@@ -51,7 +51,7 @@ Detailed instructions:
 #### Backend
 You could upload the files of the backend (`backend/*`) in the web server of your choice but make sure to do the steps below:   
 1. Of course, you will need a mysql server and you will have to import the dump file `backend/sql/dump.sql`
-2. Use the provided .env.example file and make a .env file where you will have to adjust the configuration (about the connection to the mysql and the smtp server).   
+2. Use the provided .env.sample file and make a .env file where you will have to adjust the configuration (about the connection to the mysql and the smtp server).   
 3. Install the required dependencies with `composer install`
 
 #### Frontend
