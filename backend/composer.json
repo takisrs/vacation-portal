@@ -6,7 +6,7 @@
         "vacation",
         "portal"
     ],
-    "type": "library",
+    "type": "project",
     "license": "MIT",
     "readme": "README.md",
     "homepage": "https://github.com/takisrs/vacation-portal",

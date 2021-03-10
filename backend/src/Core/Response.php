@@ -27,7 +27,7 @@ class Response
     }
 
     /**
-     * Send a response to the client
+     * Sends a response to the client
      *
      * @param array $data an array with the data of the response
      * @return void

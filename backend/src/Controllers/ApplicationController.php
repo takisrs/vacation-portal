@@ -9,13 +9,13 @@ use takisrs\Models\Application;
 use takisrs\Models\User;
 
 /**
- * ApplicationController
+ * Application Controller
  */
 class ApplicationController extends Controller
 {
 
     /**
-     * Retrieves and responses with a list of applications of the authorized user
+     * Retrieves and returns the list of applications of the authorized user
      *
      * @return void
      */
@@ -42,7 +42,7 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Creates a new application and responses with the result of the operation
+     * Creates a new application and returns the result of the operation
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class ApplicationController extends Controller
     /**
      * Approves an application
      * 
-     * The method change the status of an application to rejected, and inform the user accordingly with an email.
+     * The method changes the status of an application to "approved", and informs the user with an email.
      *
      * @return void
      */
@@ -123,7 +123,7 @@ class ApplicationController extends Controller
     /**
      * Rejects an application
      * 
-     * The method changes the status of an application to rejected, and inform the user accordingly with an email.
+     * The method changes the status of an application to "rejected", and inform the user with an email.
      *
      * @return void
      */

@@ -13,7 +13,7 @@ class HttpException extends \Exception
      * HttpException constructor
      * 
      * @param int $code http status code
-     * @param string $message and error message for the exception
+     * @param string $message an error message for the exception
      * @param \Throwable $previous
      */
     public function __construct(int $code = 500, string $message = "", \Throwable $previous = null)

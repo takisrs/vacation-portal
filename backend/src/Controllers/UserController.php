@@ -14,7 +14,7 @@ class UserController extends Controller
 {
 
     /**
-     * Retrieves and responses with the list of all users
+     * Retrieves and returns the list of all users
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class UserController extends Controller
     }
 
     /**
-     * Retrieves and responses with the fields of the requested user
+     * Retrieves and returns the fields of the requested user
      *
      * @return void
      */

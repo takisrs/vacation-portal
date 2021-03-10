@@ -144,7 +144,7 @@ class EmailTemplate
             $mail->send();
 
         } catch (Exception $e) {
-            // Do nothing right now. You could log an error though.
+            // Does nothing right now. You could log an error though.
         }
 
     }

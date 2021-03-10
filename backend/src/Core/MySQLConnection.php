@@ -33,7 +33,7 @@ class MySQLConnection
     }
 
     /**
-     * Return the instance of the MySQLConnection
+     * Returns the instance of the MySQLConnection
      *
      * @return MySQLConnection
      */
@@ -46,7 +46,7 @@ class MySQLConnection
     }
 
     /**
-     * Return the PDO connection
+     * Returns the PDO connection
      *
      * @return \PDO
      */

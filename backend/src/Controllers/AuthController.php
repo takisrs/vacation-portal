@@ -8,7 +8,7 @@ use takisrs\Core\Authenticator;
 use takisrs\Models\User;
 
 /**
- * Auth Controller.
+ * Auth Controller
  * 
  * Handles the requests regarding authentication, such as login, signup. Currently, only the login method has been implemented
  */

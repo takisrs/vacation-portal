@@ -30,7 +30,7 @@ class Application extends Model
     public $modifiedAt;
 
     /**
-     * Return application's user object
+     * Returns application's user object
      *
      * @return User
      */
@@ -40,7 +40,7 @@ class Application extends Model
     }
 
     /**
-     * Returns true id an application has been approved
+     * Returns true if the application has been approved
      *
      * @return boolean
      */
@@ -50,7 +50,7 @@ class Application extends Model
     }
 
     /**
-     * Returns true if an application has been rejected
+     * Returns true if the application has been rejected
      *
      * @return boolean
      */
@@ -60,7 +60,7 @@ class Application extends Model
     }
 
     /**
-     * Performs the approval to the application
+     * Approves the application (Updates status to "approved")
      *
      * @return boolean
      */
@@ -71,7 +71,7 @@ class Application extends Model
     }
 
     /**
-     * Performs the rejection to the application
+     * Rejects the application (Updates status to "rejected")
      *
      * @return boolean
      */

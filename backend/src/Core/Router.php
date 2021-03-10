@@ -20,10 +20,14 @@ class Router
      */
     private $routes = [];
 
-    /** @var Request $request */
+    /** 
+     * @var Request $request 
+     */
     private $request;
 
-    /** @var Response $response */
+    /** 
+     * @var Response $response 
+     */
     private $response;
 
     /**
@@ -170,12 +174,12 @@ class Router
         $uri = $this->request->getUri();
         $method = $this->request->getMethod();
 
-        // if it is an options request send 200 with the headers
+        // if it is an options request sends 200 with the headers
         if ($method === "OPTIONS"){
             $this->response->status(200)->send("");
         }
 
-        // match the request method/uri with one of the available routes
+        // matches the request method/uri with one of the available routes
         $matchedRoutes = array_filter($this->routes, function ($route) use ($method) {
             return $route["method"] == $method;
         });
