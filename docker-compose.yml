@@ -23,7 +23,7 @@ services:
         image: mysql:5.7
         environment:
             - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_DATABASE=vacation
+            - MYSQL_DATABASE=vacation_portal_db
             - MYSQL_USER=epignosis
             - MYSQL_PASSWORD=epignosis
         volumes:

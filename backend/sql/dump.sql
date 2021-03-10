@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Mar 07, 2021 at 04:37 PM
+-- Generation Time: Mar 10, 2021 at 10:53 AM
 -- Server version: 5.7.32
 -- PHP Version: 7.4.13
 
@@ -18,8 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `vacation`
+-- Database: `vacation_portal_db`
 --
+CREATE DATABASE IF NOT EXISTS `vacation_portal_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `vacation_portal_db`;
 
 -- --------------------------------------------------------
 
@@ -33,7 +35,7 @@ CREATE TABLE `applications` (
   `dateFrom` date NOT NULL,
   `dateTo` date NOT NULL,
   `reason` text,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` enum('0','1','2') NOT NULL DEFAULT '0',
   `createdAt` datetime NOT NULL,
   `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -43,24 +45,13 @@ CREATE TABLE `applications` (
 --
 
 INSERT INTO `applications` (`id`, `userId`, `dateFrom`, `dateTo`, `reason`, `status`, `createdAt`, `modifiedAt`) VALUES
-(1, 1, '2021-04-01', '2021-04-06', 'Easter vacation', 1, '2021-03-06 18:41:10', '2021-03-06 19:14:02'),
-(2, 1, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 18:44:04', '2021-03-06 18:44:04'),
-(3, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 20:44:32', '2021-03-06 20:44:32'),
-(4, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 20:44:54', '2021-03-06 20:44:54'),
-(5, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 20:45:26', '2021-03-06 20:45:26'),
-(6, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 20:45:39', '2021-03-06 20:45:39'),
-(7, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:02:15', '2021-03-06 21:02:15'),
-(8, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:02:25', '2021-03-06 21:02:25'),
-(9, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:03:28', '2021-03-06 21:03:28'),
-(10, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:08:05', '2021-03-06 21:08:05'),
-(11, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:12:25', '2021-03-06 21:12:25'),
-(12, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:13:18', '2021-03-06 21:13:18'),
-(13, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:15:04', '2021-03-06 21:15:04'),
-(14, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:25:32', '2021-03-06 21:25:32'),
-(15, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:25:45', '2021-03-06 21:25:45'),
-(16, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:26:11', '2021-03-06 21:26:11'),
-(17, 2, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-06 21:32:15', '2021-03-06 21:32:15'),
-(18, 1, '2021-04-01', '2021-04-06', 'Easter vacation', 0, '2021-03-07 13:55:26', '2021-03-07 13:55:26');
+(1, 1, '2021-04-01', '2021-04-06', 'Easter vacation', '1', '2021-03-06 18:41:10', '2021-03-06 19:14:02'),
+(2, 1, '2021-04-01', '2021-04-06', 'Easter vacation', '0', '2021-03-06 18:44:04', '2021-03-06 18:44:04'),
+(18, 1, '2021-04-01', '2021-04-06', 'Easter vacation', '0', '2021-03-07 13:55:26', '2021-03-07 13:55:26'),
+(19, 1, '2021-04-01', '2021-04-06', 'Easter vacation', '0', '2021-03-09 20:06:59', '2021-03-09 20:06:59'),
+(20, 16, '2021-03-23', '2021-03-27', 'vacations', '0', '2021-03-09 23:03:54', '2021-03-09 23:03:54'),
+(21, 16, '2021-03-17', '2021-03-24', 'fdfdsf', '2', '2021-03-09 23:09:22', '2021-03-09 23:11:40'),
+(22, 16, '2021-03-31', '2021-04-14', 'demo', '1', '2021-03-09 23:13:48', '2021-03-09 23:14:18');
 
 -- --------------------------------------------------------
 
@@ -74,7 +65,7 @@ CREATE TABLE `users` (
   `lastName` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT '1',
+  `type` enum('1','2') NOT NULL DEFAULT '1',
   `createdAt` datetime NOT NULL,
   `modifiedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -84,13 +75,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `password`, `type`, `createdAt`, `modifiedAt`) VALUES
-(1, 'Panos', 'Pantazopoulos', 'takispadaz@gmail.com', '48a79ac638adb616f81e22fa11a0894e', 1, '2021-03-05 21:38:21', '2021-03-05 19:38:43'),
-(2, 'Admin', 'User', 'takispadaz@hotmail.com', '48a79ac638adb616f81e22fa11a0894e', 2, '2021-03-06 22:24:01', '2021-03-07 12:20:23'),
-(3, 'Panos', 'Pantazopoulos', 'panos@atnet.gr', 'sdsd', 1, '2021-03-07 12:22:43', '2021-03-07 12:26:21'),
-(4, 'Panos', 'Pantazopoulos', 'panos@atnet.gr', '1a1dc91c907325c69271ddf0c944bc72', 1, '2021-03-07 13:24:56', '2021-03-07 13:24:56'),
-(5, 'Panos', 'Pantazopoulos', 'panos@atnet.gr', '1a1dc91c907325c69271ddf0c944bc72', 1, '2021-03-07 13:25:08', '2021-03-07 13:25:08'),
-(6, 'Panos', 'Pantazopoulos', 'panos@atnet.gr', '1a1dc91c907325c69271ddf0c944bc72', 1, '2021-03-07 13:32:30', '2021-03-07 13:32:30'),
-(7, 'Panos', 'Pantazopoulos', 'panos@atnet.gr', '1a1dc91c907325c69271ddf0c944bc72', 1, '2021-03-07 13:33:11', '2021-03-07 13:33:11');
+(1, 'Panos1', 'Pantazopoulos1', 'panos@atnet.gr', '202cb962ac59075b964b07152d234b70', '2', '2021-03-05 21:38:21', '2021-03-09 23:23:14'),
+(16, 'Demo', 'User', 'takispadaz@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '1', '2021-03-09 23:02:43', '2021-03-10 10:11:18');
 
 --
 -- Indexes for dumped tables
@@ -107,7 +93,8 @@ ALTER TABLE `applications`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email_idx` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -117,13 +104,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `applications`
 --
 ALTER TABLE `applications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
