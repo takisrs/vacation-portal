@@ -15,15 +15,22 @@ class Router
     const REQUIRE_USER = 1;
     const REQUIRE_ADMIN = 2;
 
-    private array $routes = [];
+    /**
+     * @var array $routes Keeps data about the available routes
+     */
+    private $routes = [];
+
+    /** @var Request $request */
     private $request;
+
+    /** @var Response $response */
     private $response;
 
     /**
      * Router constructor
      *
-     * @param \takisrs\Core\Request $request
-     * @param \takisrs\Core\Response $response
+     * @param \takisrs\Core\Request $request The instance of the Request
+     * @param \takisrs\Core\Response $response The instance of the Response
      */
     public function __construct(\takisrs\Core\Request $request, \takisrs\Core\Response $response)
     {

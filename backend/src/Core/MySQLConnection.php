@@ -9,9 +9,19 @@ namespace takisrs\Core;
  */
 class MySQLConnection
 {
+    /**
+     * the MySQLConnection instance
+     */
     private static $instance = null;
+
+    /**
+     * a PDO instance
+     */
     private $connection;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $dsn = "mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . ";charset=" . $_ENV['DB_CHARSET'];

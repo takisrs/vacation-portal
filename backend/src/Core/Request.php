@@ -10,7 +10,7 @@ namespace takisrs\Core;
 class Request
 {
     private $authenticatedUser = null;
-    private array $params = [];
+    private $params = [];
 
     /**
      * Sets the authentication user

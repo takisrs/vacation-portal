@@ -13,10 +13,26 @@ use PHPMailer\PHPMailer\SMTP;
  */
 class EmailTemplate
 {
+    /**
+     * @var string $templatePath the path to the html template file
+     */
     private $templatePath;
+
+    /**
+     * @var string $subject email's subject
+     */
     private $subject;
+
+    /**
+     * @var string $body email's html content
+     */
     private $body;
 
+    /**
+     * Constructor
+     * 
+     * @param sting $templatePath the path to the html template file
+     */
     public function __construct(string $templatePath)
     {
         if (!file_exists($templatePath))

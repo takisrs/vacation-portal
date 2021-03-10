@@ -9,10 +9,23 @@ namespace takisrs\Core;
  */
 class Controller
 {
+    /**
+     * @var Request $request The request instance
+     */
     protected $request;
+
+    /**
+     * @var Response $response The response instance
+     */
     protected $response;
 
-    public function __construct($request, $response)
+    /**
+     * Base controller constructor
+     * 
+     * @param Request $request the request object
+     * @param Response $response the response object
+     */
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
         $this->response = $response;

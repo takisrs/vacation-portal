@@ -19,7 +19,7 @@ class ApplicationController extends Controller
      *
      * @return void
      */
-    public function list(): void
+    public function index(): void
     {
         // if the authenticated user is an admin, fetch all the applications else fetch only user's applications
         if ($this->request->user()->isAdmin()) {

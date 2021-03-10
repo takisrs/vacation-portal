@@ -9,7 +9,10 @@ namespace takisrs\Core;
  */
 class Response
 {
-    private int $code;
+    /**
+     * @var int $code response http status code
+     */
+    private $code;
 
     /**
      * Sets the response status code

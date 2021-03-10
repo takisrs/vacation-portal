@@ -9,6 +9,13 @@ namespace takisrs\Core;
  */
 class HttpException extends \Exception
 {
+    /**
+     * HttpException constructor
+     * 
+     * @param int $code http status code
+     * @param string $message and error message for the exception
+     * @param \Throwable $previous
+     */
     public function __construct(int $code = 500, string $message = "", \Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
