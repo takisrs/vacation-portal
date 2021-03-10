@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-        <img class="img-fluid header__logo" alt="Epignosis eLearning Solutions" :src="`${publicPath}logo.svg`">
+        <img class="img-fluid header__logo" alt="Vacation Portal" :src="`${publicPath}logo.svg`">
         <h1 class="header__title">Vacation Portal</h1>
         <div class="user-data" v-if="auth">
             <span>{{ userData.userName }}</span> ({{ userData.userType == 1 ? 'user' : 'admin' }})
