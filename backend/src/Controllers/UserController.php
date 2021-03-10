@@ -18,7 +18,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function list(): void
+    public function index(): void
     {
         $user = new User;
         $users = $user->findAll();
