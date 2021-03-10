@@ -18,6 +18,7 @@ class AuthController extends Controller
     /**
      * Login
      *
+     * @todo Implement with password_hash
      * @return void
      */
     public function login(): void
