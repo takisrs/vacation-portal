@@ -1,7 +1,7 @@
 # Vacation Portal
 A simple portal that handles vacation requests.   
 The backend has been written in PHP and exposes a REST API.   
-The frontend that consumes the API, is a single page application (SPA) implemented with the help of VueJS javascript framework.   
+The frontend that consumes the API, is a single page application (SPA) implemented with the help of Vue.js javascript framework.   
 Below you will find the necessary documentation with instructions on how to run this project.
 
 ## Folder structure
@@ -80,7 +80,7 @@ Each endpoint, except the login one, requires an authorization bearer token in t
 `POST /users` **admin access** Creates a new user   
 `GET /users/:id` **admin access** Return user's details   
 `POST /users/:id` **admin access** Updates a user   
-`GET /applications` **user acess** Returns a list of applications of the authorized user   
+`GET /applications` **user access** Returns a list of applications of the authorized user   
 `POST /applications` **user access** Creates a new application   
 `POST /applications/:id/approve` **admin access** Approves an application   
 `POST /applications/:id/reject` **admin access** Rejects an application    
