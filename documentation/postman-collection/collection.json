@@ -1,0 +1,1025 @@
+{
+	"info": {
+		"_postman_id": "d69017ef-ed4a-4021-a7c7-456ec921ac00",
+		"name": "Epignosis Vacation Portal",
+		"description": "A simple REST api that handles vacation requests.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@vacationapp.gr\",\n    \"password\": \"admin123#\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login to the app and get the auth token and the user's details"
+					},
+					"response": [
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"takispadaz@gmail.com\",\n    \"password\": \"user123#\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 22:53:10 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "535"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"You logged in successfully\",\n    \"data\": {\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJQYW5vcyIsImlhdCI6MTYxNTQxNjc5MCwiZXhwIjoxNjE1NDIwMzkwLCJjb250ZXh0Ijp7InVzZXIiOnsiaWQiOiIxIiwiZW1haWwiOiJ0YWtpc3BhZGF6QGdtYWlsLmNvbSIsInR5cGUiOiIxIn19fQ.7mZsXYUyWBZf7YUL_hHRdKH5RpIl3vXlzUJUOWlOvEI\",\n        \"user\": {\n            \"id\": \"1\",\n            \"firstName\": \"Panos\",\n            \"lastName\": \"Pantazopoulos\",\n            \"email\": \"takispadaz@gmail.com\",\n            \"password\": \"ae86ba1819939deb7b9874abc478a811\",\n            \"type\": \"1\",\n            \"createdAt\": \"2021-03-11 00:44:17\",\n            \"modifiedAt\": \"2021-03-10 22:52:45\"\n        }\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "Authentication related endpoints. Currently, only the login has been implemented.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "applications",
+			"item": [
+				{
+					"name": "list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/applications",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"applications"
+							]
+						},
+						"description": "Retrieves a list of authorized user's applications"
+					},
+					"response": [
+						{
+							"name": "list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/applications",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"applications"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 23:02:59 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "650"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"Retrieved 3 applications\",\n    \"data\": {\n        \"applications\": [\n            {\n                \"id\": \"3\",\n                \"userId\": \"1\",\n                \"dateFrom\": \"2021-07-01\",\n                \"dateTo\": \"2021-07-03\",\n                \"reason\": \"Personal issues\",\n                \"status\": \"0\",\n                \"createdAt\": \"2021-03-10 23:02:51\",\n                \"modifiedAt\": \"2021-03-10 23:02:51\",\n                \"days\": 3\n            },\n            {\n                \"id\": \"2\",\n                \"userId\": \"1\",\n                \"dateFrom\": \"2021-08-10\",\n                \"dateTo\": \"2021-08-25\",\n                \"reason\": \"Summer holidays to Amorgos\",\n                \"status\": \"0\",\n                \"createdAt\": \"2021-03-10 23:02:11\",\n                \"modifiedAt\": \"2021-03-10 23:02:11\",\n                \"days\": 16\n            },\n            {\n                \"id\": \"1\",\n                \"userId\": \"1\",\n                \"dateFrom\": \"2021-05-01\",\n                \"dateTo\": \"2021-05-06\",\n                \"reason\": \"Easter vacation\",\n                \"status\": \"0\",\n                \"createdAt\": \"2021-03-10 23:00:55\",\n                \"modifiedAt\": \"2021-03-10 23:00:55\",\n                \"days\": 6\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dateFrom\": \"2021-07-01\",\n    \"dateTo\": \"2021-07d-03\",\n    \"reason\": \"Personal issues\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/applications",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"applications"
+							]
+						},
+						"description": "Creates a new application"
+					},
+					"response": [
+						{
+							"name": "create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"dateFrom\": \"2021-05-01\",\n    \"dateTo\": \"2021-05-06\",\n    \"reason\": \"Easter vacation\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/applications",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"applications"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 23:00:55 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "239"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"Application created successfully\",\n    \"data\": {\n        \"application\": {\n            \"id\": \"1\",\n            \"userId\": \"1\",\n            \"dateFrom\": \"2021-05-01\",\n            \"dateTo\": \"2021-05-06\",\n            \"reason\": \"Easter vacation\",\n            \"status\": 0,\n            \"createdAt\": \"2021-03-10 23:00:55\",\n            \"modifiedAt\": null\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "approve",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/applications/:id/approve",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"applications",
+								":id",
+								"approve"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Application id"
+								}
+							]
+						},
+						"description": "Approves an existing application"
+					},
+					"response": [
+						{
+							"name": "approve",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/applications/1/approve",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"applications",
+										"1",
+										"approve"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 23:04:25 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "244"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"Application approved\",\n    \"data\": {\n        \"application\": {\n            \"id\": \"1\",\n            \"userId\": \"1\",\n            \"dateFrom\": \"2021-05-01\",\n            \"dateTo\": \"2021-05-06\",\n            \"reason\": \"Easter vacation\",\n            \"status\": 1,\n            \"createdAt\": \"2021-03-10 23:00:55\",\n            \"modifiedAt\": \"2021-03-10 23:00:55\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "reject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/applications/:id/reject",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"applications",
+								":id",
+								"reject"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3",
+									"description": "Application id"
+								}
+							]
+						},
+						"description": "Rejects an existing application"
+					},
+					"response": [
+						{
+							"name": "reject",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/applications/3/reject",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"applications",
+										"3",
+										"reject"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 23:04:45 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "246"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"Application 3 rejected\",\n    \"data\": {\n        \"application\": {\n            \"id\": \"3\",\n            \"userId\": \"1\",\n            \"dateFrom\": \"2021-07-01\",\n            \"dateTo\": \"2021-07-03\",\n            \"reason\": \"Personal issues\",\n            \"status\": 2,\n            \"createdAt\": \"2021-03-10 23:02:51\",\n            \"modifiedAt\": \"2021-03-10 23:02:51\"\n        }\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints related to applications management",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/users",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Retrieves a list with all users"
+					},
+					"response": [
+						{
+							"name": "list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/users",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 23:05:03 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "481"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"Retrieved 2 users\",\n    \"data\": {\n        \"users\": [\n            {\n                \"id\": \"1\",\n                \"firstName\": \"Panos\",\n                \"lastName\": \"Pantazopoulos\",\n                \"email\": \"takispadaz@gmail.com\",\n                \"password\": \"ae86ba1819939deb7b9874abc478a811\",\n                \"type\": \"1\",\n                \"createdAt\": \"2021-03-11 00:44:17\",\n                \"modifiedAt\": \"2021-03-10 22:52:45\"\n            },\n            {\n                \"id\": \"2\",\n                \"firstName\": \"Admin\",\n                \"lastName\": \"User\",\n                \"email\": \"admin@vacationapp.gr\",\n                \"password\": \"46c17fb99b9c8c8ae8214834e1edf6b1\",\n                \"type\": \"2\",\n                \"createdAt\": \"2021-03-11 00:50:32\",\n                \"modifiedAt\": \"2021-03-10 22:51:33\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Example\",\n    \"lastName\": \"User\",\n    \"email\": \"demo@vacationapp.gr\",\n    \"password\": \"user123#\",\n    \"type\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/users",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Creates a new user"
+					},
+					"response": [
+						{
+							"name": "create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Example\",\n    \"lastName\": \"User\",\n    \"email\": \"demo@vacationapp.gr\",\n    \"password\": \"user123#\",\n    \"type\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/users",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 23:07:07 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "255"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"User created successfully\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"3\",\n            \"firstName\": \"Example\",\n            \"lastName\": \"User\",\n            \"email\": \"demo@vacationapp.gr\",\n            \"password\": \"ae86ba1819939deb7b9874abc478a811\",\n            \"type\": \"1\",\n            \"createdAt\": \"2021-03-10 23:07:07\",\n            \"modifiedAt\": null\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Panos\",\n    \"lastName\": \"Pantazopoulos\",\n    \"email\": \"takispadaz@gmail.com\",\n    \"password\": \"user123#\",\n    \"type\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/users/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "User Id"
+								}
+							]
+						},
+						"description": "Updates an existing user"
+					},
+					"response": [
+						{
+							"name": "update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Panos\",\n    \"lastName\": \"Pantazopoulos\",\n    \"email\": \"takispadaz@gmail.com\",\n    \"password\": \"user123#\",\n    \"type\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/users/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 23:06:08 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "271"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"User was updated\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"1\",\n            \"firstName\": \"Panos\",\n            \"lastName\": \"Pantazopoulos\",\n            \"email\": \"takispadaz@gmail.com\",\n            \"password\": \"ae86ba1819939deb7b9874abc478a811\",\n            \"type\": \"1\",\n            \"createdAt\": \"2021-03-11 00:44:17\",\n            \"modifiedAt\": \"2021-03-10 22:52:45\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/users/:id",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "User id"
+								}
+							]
+						},
+						"description": "Retrives a single user"
+					},
+					"response": [
+						{
+							"name": "single",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/users/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 10 Mar 2021 23:06:21 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.38 (Debian)"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.14"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, Authorization"
+								},
+								{
+									"key": "Content-Length",
+									"value": "279"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"message\": \"User with id 1 retrieved\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"1\",\n            \"firstName\": \"Panos\",\n            \"lastName\": \"Pantazopoulos\",\n            \"email\": \"takispadaz@gmail.com\",\n            \"password\": \"ae86ba1819939deb7b9874abc478a811\",\n            \"type\": \"1\",\n            \"createdAt\": \"2021-03-11 00:44:17\",\n            \"modifiedAt\": \"2021-03-10 22:52:45\"\n        }\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints related to users management",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{ACCESS_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost"
+		},
+		{
+			"key": "ACCESS_TOKEN",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJQYW5vcyIsImlhdCI6MTYxNTQxNzQyOCwiZXhwIjoxNjE1NDIxMDI4LCJjb250ZXh0Ijp7InVzZXIiOnsiaWQiOiIyIiwiZW1haWwiOiJhZG1pbkB2YWNhdGlvbmFwcC5nciIsInR5cGUiOiIyIn19fQ.eh5kHiYReRkMekoxD1fDcc4TEZ8t04OgzVe-2W1cvHA"
+		}
+	]
+}
