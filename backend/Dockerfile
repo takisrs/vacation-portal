@@ -17,9 +17,7 @@ RUN apt-get update && apt-get install -y \
 # Install required php extensions
 RUN docker-php-ext-install \
     zip \
-    bcmath \
     pdo_mysql \
-    mysqli \
     exif 
 
 # Install Composer
