@@ -52,6 +52,16 @@ You could upload the files of the backend (`backend/*`) in the web server of you
 1. Install the required dependecies with `npm install`
 2. Serve the app in dev mode with `npm run serve` or build it with `npm run build` and move the `frontend/dist` in the webserver of your choice
 
+### Demo Accounts
+The db dump includes the following demo accounts that you may use:  
+**User**    
+demo@vacationapp.gr   
+user123#   
+
+**Admin**   
+admin@vacationapp.gr   
+admin123#   
+
 ## Backend
 **Some key notes about the backend:**
 * Requires PHP 7.4 with the pdo_mysql extension
@@ -77,7 +87,6 @@ Each endpoint, except the login one, requires an authorization bearer token in t
 You may also find a postman collection at `/documentation/postman-collection/collection.json` in case you want to check the above endpoints.
 
 ### Source code documentation
-
 
 - [\takisrs\VacationApp](#class-takisrsvacationapp)
 - [\takisrs\Controllers\ApplicationController](#class-takisrscontrollersapplicationcontroller)
