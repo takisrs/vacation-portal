@@ -29,7 +29,7 @@ class ApplicationController extends Controller
         }
 
         if (!$applications) throw new HttpException(200, "No applications Found");
-        
+
         // add days of vacation to each application object as we need them in the api response
         foreach ($applications as $index => $application)
             $applications[$index]->days = $application->days();
@@ -50,6 +50,12 @@ class ApplicationController extends Controller
      */
     public function create(): void
     {
+        // validate the request, to make sure that you have valid data
+        $this->request->validate([
+            'body.dateFrom' => ['required', 'date'],
+            'body.dateTo' => ['required', 'date'],
+            'body.reason' => ['required']
+        ]);
 
         $application = new Application;
         $application->userId = $this->request->user()->id;

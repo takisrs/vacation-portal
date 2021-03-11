@@ -23,6 +23,12 @@ class AuthController extends Controller
      */
     public function login(): void
     {
+        // validate the request, to make sure that you have valid data
+        $this->request->validate([
+            'body.email' => ['required', 'email'],
+            'body.password' => ['required']
+        ]);
+        
         $user = new User;
         $user = $user->findOneBy([
             'email' => $this->request->body('email'),

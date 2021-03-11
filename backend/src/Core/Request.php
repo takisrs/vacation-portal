@@ -159,6 +159,41 @@ class Request
     }
 
     /**
+     * A simple validation method for all request params (get, post, body)
+     *
+     * @param array $rulesArr
+     * @return bool|null
+     */
+    public function validate(array $rulesArr): ?bool
+    {
+        foreach ($rulesArr as $field => $rules) {
+            list($method, $field) = explode(".", $field);
+
+            $value = call_user_func([$this, $method], $field);
+
+            foreach ($rules as $rule) {
+                switch ($rule) {
+                    case "required":
+                        if (empty($value))
+                            throw new HttpException(400, sprintf("The parameter %s is required", $field));
+                        break;
+                    case "email":
+                        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                            throw new HttpException(400, sprintf("The parameter %s should be a valid email address", $field));
+                        }
+                        break;
+                    case "date":
+                        if (\DateTime::createFromFormat('Y-m-d', $value) == false) {
+                            throw new HttpException(400, sprintf("The parameter %s should be a valid date with the format Y-m-d", $field));
+                        }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Cleans the provided data
      *
      * @param mixed $data

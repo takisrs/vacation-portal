@@ -63,6 +63,15 @@ class UserController extends Controller
      */
     public function create(): void
     {
+        // validate the request, to make sure that you have valid data
+        $this->request->validate([
+            'body.firstName' => ['required'],
+            'body.lastName' => ['required'],
+            'body.email' => ['required', 'email'],
+            'body.type' => ['required'],
+            'body.password' => ['required']
+        ]);
+
         $emailCheck = (new User)->findOneBy(['email' => $this->request->body('email')]);
         if ($emailCheck) throw new HttpException(409, sprintf("The email '%s' already exists in our database", $this->request->body('email')));
 
