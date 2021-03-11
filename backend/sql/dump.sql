@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Mar 10, 2021 at 10:53 AM
+-- Generation Time: Mar 11, 2021 at 07:18 PM
 -- Server version: 5.7.32
 -- PHP Version: 7.4.13
 
@@ -45,13 +45,14 @@ CREATE TABLE `applications` (
 --
 
 INSERT INTO `applications` (`id`, `userId`, `dateFrom`, `dateTo`, `reason`, `status`, `createdAt`, `modifiedAt`) VALUES
-(1, 1, '2021-04-01', '2021-04-06', 'Easter vacation', '1', '2021-03-06 18:41:10', '2021-03-06 19:14:02'),
-(2, 1, '2021-04-01', '2021-04-06', 'Easter vacation', '0', '2021-03-06 18:44:04', '2021-03-06 18:44:04'),
-(18, 1, '2021-04-01', '2021-04-06', 'Easter vacation', '0', '2021-03-07 13:55:26', '2021-03-07 13:55:26'),
-(19, 1, '2021-04-01', '2021-04-06', 'Easter vacation', '0', '2021-03-09 20:06:59', '2021-03-09 20:06:59'),
-(20, 16, '2021-03-23', '2021-03-27', 'vacations', '0', '2021-03-09 23:03:54', '2021-03-09 23:03:54'),
-(21, 16, '2021-03-17', '2021-03-24', 'fdfdsf', '2', '2021-03-09 23:09:22', '2021-03-09 23:11:40'),
-(22, 16, '2021-03-31', '2021-04-14', 'demo', '1', '2021-03-09 23:13:48', '2021-03-09 23:14:18');
+(1, 1, '2021-05-01', '2021-05-06', 'Easter vacation', '1', '2021-03-10 23:00:55', '2021-03-10 23:04:25'),
+(2, 1, '2021-08-10', '2021-08-25', 'Summer holidays to Amorgos', '0', '2021-03-10 23:02:11', '2021-03-10 23:02:11'),
+(3, 1, '2021-07-01', '2021-07-03', 'Personal issues', '2', '2021-03-10 23:02:51', '2021-03-10 23:04:45'),
+(4, 3, '2021-07-01', '2021-07-03', 'Personal issues', '0', '2021-03-11 13:08:14', '2021-03-11 13:08:14'),
+(7, 1, '2021-06-22', '2021-06-27', 'Personal reason', '1', '2021-03-11 14:00:11', '2021-03-11 14:17:56'),
+(8, 1, '2021-12-23', '2021-12-27', 'Christmas Holidays', '1', '2021-03-11 19:09:37', '2021-03-11 19:12:08'),
+(9, 3, '2021-04-20', '2021-04-27', 'Personal issues', '2', '2021-03-11 19:16:05', '2021-03-11 19:17:53'),
+(10, 3, '2021-08-15', '2021-08-28', 'Summer Holidays', '1', '2021-03-11 19:17:20', '2021-03-11 19:17:43');
 
 -- --------------------------------------------------------
 
@@ -75,8 +76,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `password`, `type`, `createdAt`, `modifiedAt`) VALUES
-(1, 'Panos1', 'Pantazopoulos1', 'panos@atnet.gr', '202cb962ac59075b964b07152d234b70', '2', '2021-03-05 21:38:21', '2021-03-09 23:23:14'),
-(16, 'Demo', 'User', 'takispadaz@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '1', '2021-03-09 23:02:43', '2021-03-10 10:11:18');
+(1, 'Panos', 'Pantazopoulos', 'takispadaz@gmail.com', 'ae86ba1819939deb7b9874abc478a811', '1', '2021-03-11 00:44:17', '2021-03-11 19:10:22'),
+(2, 'Admin', 'User', 'admin@vacationapp.gr', '46c17fb99b9c8c8ae8214834e1edf6b1', '2', '2021-03-11 00:50:32', '2021-03-10 22:51:33'),
+(3, 'Example', 'User', 'demo@vacationapp.gr', 'ae86ba1819939deb7b9874abc478a811', '1', '2021-03-10 23:07:07', '2021-03-10 23:07:07');
 
 --
 -- Indexes for dumped tables
@@ -104,13 +106,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `applications`
 --
 ALTER TABLE `applications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
