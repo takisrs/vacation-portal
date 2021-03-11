@@ -11,8 +11,25 @@ use takisrs\Core\Model;
  */
 class User extends Model
 {
+    /**
+     * The name of users' table
+     * 
+     * @var string $tableName
+     */
     protected string $tableName = 'users';
+
+    /**
+     * The primary key of users' table
+     * 
+     * @var string $primaryKey
+     */
     protected string $primaryKey = 'id';
+
+    /**
+     * The fields that can be filled in the users' database table
+     * 
+     * @var string $fillable
+     */
     protected array $fillable = ["firstName", "lastName", "email", "password", "type", "createdAt"];
 
     const TYPE_USER = 1;

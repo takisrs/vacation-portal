@@ -9,6 +9,11 @@ use takisrs\Models\User;
 
 /**
  * User Controller
+ * 
+ * Handles any request about users (list, view, create, update).
+ * @see takisrs\Models\User the User Model
+ * 
+ * @todo filter the response to not return the hashed password
  */
 class UserController extends Controller
 {

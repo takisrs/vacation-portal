@@ -5,14 +5,18 @@ namespace takisrs\Core;
 /**
  * Response class
  * 
+ * A simple class that sends the api response
+ * 
  * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
  */
 class Response
 {
     /**
-     * @var int $code response http status code
+     * http response status code
+     * 
+     * @var int $code
      */
-    private $code;
+    private int $code;
 
     /**
      * Sets the response status code

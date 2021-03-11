@@ -14,13 +14,34 @@ use takisrs\Controllers\UserController;
 /**
  * App's main class
  * 
+ * Initialize the Request, Response, Router objects.
+ * Contains the defined routes.
+ * Provides a catch block for the whole application execution.
+ * 
  * @author Panagiots Pantazopoulos <takispadaz@gmail.com>
  */
 class VacationApp
 {
-    private $request;
-    private $response;
-    private $router;
+    /**
+     * The request object
+     * 
+     * @var Request $request
+     */
+    private Request $request;
+
+    /**
+     * The response onject
+     * 
+     * @var Response $response
+     */
+    private Response $response;
+
+    /**
+     * The router object
+     * 
+     * @var Router $router
+     */
+    private Router $router;
 
     public function __construct()
     {
@@ -30,7 +51,7 @@ class VacationApp
     }
 
     /**
-     * Declares the routes that the app uses
+     * Declares the routes that the app uses.
      *
      * @return void
      */

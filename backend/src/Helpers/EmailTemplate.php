@@ -14,19 +14,25 @@ use PHPMailer\PHPMailer\SMTP;
 class EmailTemplate
 {
     /**
-     * @var string $templatePath the path to the html template file
+     * The path to the html template file
+     * 
+     * @var string $templatePath
      */
-    private $templatePath;
+    private string $templatePath;
 
     /**
-     * @var string $subject email's subject
+     * Email's subject
+     * 
+     * @var string $subject
      */
-    private $subject;
+    private string $subject;
 
     /**
-     * @var string $body email's html content
+     * Email's html content
+     * 
+     * @var string $body
      */
-    private $body;
+    private string $body;
 
     /**
      * Constructor

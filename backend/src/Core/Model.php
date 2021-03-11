@@ -7,6 +7,9 @@ use takisrs\Core\MySQLConnection;
 /**
  * Base Controller class
  * 
+ * Any model extends this class.
+ * Provides some methods that simplify SELECT, CREATE and UPDATE sql queries.
+ * 
  * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
  */
 class Model

@@ -3,7 +3,9 @@
 namespace takisrs\Core;
 
 /**
- * A class that handles the mysql connection following the singleton pattern
+ * A class that handles the mysql connection
+ * 
+ * Follows the singleton pattern.
  * 
  * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
  */
@@ -16,8 +18,10 @@ class MySQLConnection
 
     /**
      * a PDO instance
+     * 
+     * @var PDO
      */
-    private $connection;
+    private \PDO $connection;
 
     /**
      * Constructor

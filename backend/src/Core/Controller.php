@@ -5,19 +5,25 @@ namespace takisrs\Core;
 /**
  * Base Controller class
  * 
+ * Each controller should extend this class.
+ * 
  * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
  */
 class Controller
 {
     /**
-     * @var Request $request The request instance
+     * The request instance
+     * 
+     * @var Request $request
      */
-    protected $request;
+    protected Request $request;
 
     /**
-     * @var Response $response The response instance
+     * The response instance
+     * 
+     * @var Response $response
      */
-    protected $response;
+    protected Response $response;
 
     /**
      * Base controller constructor

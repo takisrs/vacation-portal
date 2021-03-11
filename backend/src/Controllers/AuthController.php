@@ -10,7 +10,7 @@ use takisrs\Models\User;
 /**
  * Auth Controller
  * 
- * Handles the requests regarding authentication, such as login, signup. Currently, only the login method has been implemented
+ * Handles the requests regarding authentication, such as login, signup. Currently, only the login method has been implemented.
  */
 class AuthController extends Controller
 {

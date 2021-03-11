@@ -5,12 +5,25 @@ namespace takisrs\Core;
 /**
  * Request class
  * 
+ * Helps with the request manipullation.
+ * 
  * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
  */
 class Request
 {
-    private $authenticatedUser = null;
-    private $params = [];
+    /**
+     * The object of the authenticated user
+     * 
+     * @var \takisrs\Models\User|null $authenticatedUser
+     */
+    private ?\takisrs\Models\User $authenticatedUser = null;
+
+    /**
+     * Keeps url parameters
+     * 
+     * @var array $params
+     */
+    private array $params = [];
 
     /**
      * Sets the authentication user

@@ -11,8 +11,25 @@ use takisrs\Core\Model;
  */
 class Application extends Model
 {
+    /**
+     * The name of aplications' table
+     * 
+     * @var string $tableName
+     */
     protected string $tableName = 'applications';
+
+    /**
+     * The primary key of aplications table
+     * 
+     * @var string $primaryKey
+     */
     protected string $primaryKey = 'id';
+
+    /**
+     * The fields that can be filled in the aplications' database table
+     * 
+     * @var string $fillable
+     */
     protected array $fillable = ["userId", "dateFrom", "dateTo", "reason", "status", "createdAt"];
 
     const STATUS_PENDING = 0;

@@ -6,7 +6,7 @@ use takisrs\Core\HttpException;
 use takisrs\Models\User;
 
 /**
- * Response class
+ * Router class
  * 
  * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
  */
@@ -16,27 +16,29 @@ class Router
     const REQUIRE_ADMIN = 2;
 
     /**
-     * @var array $routes Keeps data about the available routes
+     * Keeps data about the available routes
+     * 
+     * @var array $routes
      */
-    private $routes = [];
+    private array $routes = [];
 
     /** 
      * @var Request $request 
      */
-    private $request;
+    private Request $request;
 
     /** 
      * @var Response $response 
      */
-    private $response;
+    private Response $response;
 
     /**
      * Router constructor
      *
-     * @param \takisrs\Core\Request $request The instance of the Request
-     * @param \takisrs\Core\Response $response The instance of the Response
+     * @param Request $request The instance of the Request
+     * @param Response $response The instance of the Response
      */
-    public function __construct(\takisrs\Core\Request $request, \takisrs\Core\Response $response)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
         $this->response = $response;

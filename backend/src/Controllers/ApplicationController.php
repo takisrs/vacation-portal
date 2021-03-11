@@ -10,6 +10,10 @@ use takisrs\Models\User;
 
 /**
  * Application Controller
+ * 
+ * Methods related to applications' handling (list, create, approve, reject).
+ * 
+ * @see takisrs\Models\Application the Application Model
  */
 class ApplicationController extends Controller
 {

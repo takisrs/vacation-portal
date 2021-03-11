@@ -5,6 +5,9 @@ namespace takisrs\Core;
 /**
  * A simple HttpException class
  * 
+ * Throw this exception when you want to provide a meaningfull API response to the user with the appropiate status code.
+ * Any other exception type returns a 500 status code in the response.
+ * 
  * @author Panagiotis Pantazopoulos <takispadaz@gmail.com>
  */
 class HttpException extends \Exception
