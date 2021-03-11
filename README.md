@@ -7,7 +7,7 @@ Below you will find the nessasary documentation with instructions on how to run 
 ## Folder structure
     .
     ├── backend/                 # Source files of the backend
-    │   ├── sql/                 # A Database dump
+    │   ├── sql/                 # A database dump
     │   ├── .env.sample          # A sample .env file that contains the required environment variables
     │   ├── composer.json        # Project's composer file (dependencies, autoload)
     │   ├── ...
@@ -21,12 +21,12 @@ Below you will find the nessasary documentation with instructions on how to run 
     └── docker-compose.yml       # A docker-compose yaml file to run the project easily
 
 ## Installation
-I provide below some instructions on how to run the app.  
+I provide some instructions on how to run the app down below.
 You have the option to use the provided docker setup or run in manually.
 
 ### Docker
 Let's start with docker, as it is the easiest option. Just run the command below or follow the detailed instructions.
-Make sure though that the ports 80 (backend), 8080(frontend), 8081(phpmyadmin that used during development) are not occupied in your system as they exposed from the docker containers.
+Make sure though that the ports 80 (backend), 8080(frontend), 8081(phpmyadmin that used during development) are not occupied in your system as they get exposed by the docker containers.
 
 ```sh
 git clone https://github.com/takisrs/vacation-portal.git && \
@@ -70,7 +70,7 @@ admin123#
 * Exposes a REST API
 * The authentication / authorization is performed with JWT access tokens
 * Each class / method is documented with DocBlocks
-* You may find the defined routes at `backend/src/VacationApp.php`, so you could follow the flow of the application.
+* You may find the defined routes at `backend/src/VacationApp.php`, so you could follow the flow of the application starting from there.
 
 ### Rest API
 The rest api exposes the endpoints below. Any required payload is given as a json in the body of the request.   
@@ -114,7 +114,7 @@ You may also find a postman collection at `/documentation/postman-collection/col
 | Visibility | Function |
 |:-----------|:---------|
 | public | <strong>__construct()</strong> : <em>void</em> |
-| public | <strong>init()</strong> : <em>void</em><br /><em>App's main method. All starts here. It wraps all the execution in a try/catch block to catch any unhandled exeption and return a meaningful json response to the client.</em> |
+| public | <strong>init()</strong> : <em>void</em><br /><em>App's main method. It all starts here. It wraps the whole execution in a try/catch block to catch any unhandled exeption and return a meaningful json response to the client.</em> |
 | public | <strong>registerRoutes()</strong> : <em>void</em><br /><em>Declares the routes that the app uses.</em> |
 
 <hr />

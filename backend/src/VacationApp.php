@@ -74,9 +74,9 @@ class VacationApp
     }
 
     /**
-     * App's main method. All starts here.
+     * App's main method. It all starts here.
      * 
-     * It wraps all the execution in a try/catch block to catch any unhandled exeption and return a meaningful json response to the client.
+     * It wraps the whole execution in a try/catch block to catch any unhandled exeption and return a meaningful json response to the client.
      *
      * @return void
      */
