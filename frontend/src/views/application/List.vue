@@ -24,7 +24,7 @@
                             <span v-date>{{ application.dateTo }}</span>
                         </td>
                         <td>{{ application.days }}</td>
-                        <td>{{ statuses[application.status] }}</td>
+                        <td :style="{ color: statuses[application.status].color }">{{ statuses[application.status].name }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -37,7 +37,20 @@ export default {
     data() {
         return {
             applications: {},
-            statuses: ["pending", "approved", "rejected"]
+            statuses: [
+                {
+                    name: "pending",
+                    color: "#216BB2"
+                },
+                {
+                    name: "approved",
+                    color: "#0f9413"
+                },
+                {
+                    name: "rejected",
+                    color: "#a31a2c"
+                }
+            ]
         }
     },
     computed: {
@@ -62,7 +75,10 @@ export default {
                 });
             }
         }).catch(error => {
-            console.log(error);
+            this.$store.commit('setMessage', {
+                class: "error", 
+                message: error
+            });
         });
     }
 }

@@ -46,10 +46,6 @@ export default {
 </script>
 
 <style lang="scss">
-.wrapper{
-  padding:2rem 0;
-}
-
 .errors{
   position:absolute;
   left:0;
@@ -58,5 +54,6 @@ export default {
   align-items: center;
   flex-direction: column;
   z-index:10;
+  margin-top:1rem;
 }
 </style>

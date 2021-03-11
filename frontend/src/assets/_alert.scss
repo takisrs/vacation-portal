@@ -1,49 +1,47 @@
-.alert{
-    font-size:1.5rem;
-    padding:1em;
-    background-color:transparentize($light, 0.1);
-    margin:1rem 0rem 1rem;
-    border-radius:4px;
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-    max-width:50rem;
-    
-  
-    &:first-child{
-      margin-top:0;
-    }
-  
-    &--error{
-      border:1px $danger solid;
-      color:$white;
-      background-color:transparentize($danger, 0.1);
-    }
-  
-    &--success{
-      background-color:transparentize($success, 0.1);
-      border:1px $success solid;
-    }
-  
-    &--info{
-      background-color: transparentize($info, 0.1);
-      border: 1px $info solid;
-    }
-  
-    &--warning{
-      background-color: transparentize($warning, 0.1);
-      border: 1px  $warning solid;
-    }
+.alert {
+	font-size: 1.5rem;
+	padding: 1em;
+	background-color: transparentize($light, 0.1);
+	margin: 1rem 0rem 1rem;
+	border-radius: 4px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 50rem;
 
-    &__close{
-        color:$dark;
-        text-decoration:none;
-        font-size:1.2rem;
-        background:$white;
-        padding:0.5rem;
-        border-radius:4px;
-        margin-left:2rem;
-        font-weight:bold;
-    }
-    
-  }
+	&:first-child {
+		margin-top: 0;
+	}
+
+	&--error {
+		border: 1px $danger solid;
+		color: $white;
+		background-color: transparentize($danger, 0.1);
+	}
+
+	&--success {
+		background-color: transparentize($success, 0.1);
+		border: 1px $success solid;
+	}
+
+	&--info {
+		background-color: transparentize($info, 0.1);
+		border: 1px $info solid;
+	}
+
+	&--warning {
+		background-color: transparentize($warning, 0.1);
+		border: 1px $warning solid;
+	}
+
+	&__close {
+		color: $dark;
+		text-decoration: none;
+		font-size: 1.2rem;
+		background: $white;
+		padding: 0.5rem;
+		border-radius: 4px;
+		margin-left: 2rem;
+		font-weight: bold;
+	}
+}
