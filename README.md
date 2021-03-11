@@ -1,6 +1,7 @@
 # Vacation Portal
 A simple portal that handles vacation requests.   
-The backend exposes a REST api, that the frontend consumes.   
+The backend has been written in PHP and exposes a REST API.   
+The frontend that consumes the API, is a single page application (SPA) implemented with the help of VueJS javascript framework.   
 Below you will find the nessasary documentation with instructions on how to run this app.
 
 ## Folder structure
