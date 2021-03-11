@@ -53,14 +53,13 @@ You could upload the files of the backend (`backend/*`) in the web server of you
 2. Serve the app in dev mode with `npm run serve` or build it with `npm run build` and move the `frontend/dist` in the webserver of your choice
 
 ## Backend
-Some key notes about the backend:
+**Some key notes about the backend:**
 * Requires PHP 7.4 with the pdo_mysql extension
 * Follows the MVC architecture
 * Exposes a REST API
-* You may find the defined routes at `backend/src/VacationApp.php`
 * The authentication / authorization is performed with JWT access tokens
-* Each class / method is documented with doc blocks
-* I tried to implement a "framework approach" to make the backend as extensible as possible
+* Each class / method is documented with DocBlocks
+* You may find the defined routes at `backend/src/VacationApp.php`, so you could follow the flow of the application.
 
 ### Rest API
 The rest api exposes the endpoints below. Any required payload is given as a json in the body of the request.   
@@ -309,7 +308,7 @@ You may also find a postman collection at `/documentation/postman-collection/col
 *This class extends [\takisrs\Core\Model](#class-takisrscoremodel)*
 
 ## Frontend
-Some key notes about the frontend:
+**Some key notes about the frontend:**
 * Requires nodejs 14 if you intend to set it up locally in a dev environment
 * It is a SPA that has been built with the VueJS framework
 * Communicates with the backend through the REST api
