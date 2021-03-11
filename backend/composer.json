@@ -30,5 +30,8 @@
         "firebase/php-jwt": "^5.2",
         "phpmailer/phpmailer": "^6.3",
         "vlucas/phpdotenv": "^5.3"
+    },
+    "require-dev": {
+        "victorjonsson/markdowndocs": "^1.3"
     }
 }
