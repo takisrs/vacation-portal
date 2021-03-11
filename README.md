@@ -2,7 +2,7 @@
 A simple portal that handles vacation requests.   
 The backend has been written in PHP and exposes a REST API.   
 The frontend that consumes the API, is a single page application (SPA) implemented with the help of VueJS javascript framework.   
-Below you will find the nessasary documentation with instructions on how to run this app.
+Below you will find the necessary documentation with instructions on how to run this project.
 
 ## Folder structure
     .
@@ -21,7 +21,7 @@ Below you will find the nessasary documentation with instructions on how to run 
     └── docker-compose.yml       # A docker-compose yaml file to run the project easily
 
 ## Installation
-I provide some instructions on how to run the app down below.
+I provide some instructions on how to run the project down below.
 You have the option to use the provided docker setup or run in manually.
 
 ### Docker
@@ -37,7 +37,7 @@ docker-compose up
 Detailed instructions:
 1. Clone this repo `git clone https://github.com/takisrs/vacation-portal.git`  
 2. Move to the project's folder `cd vacation-portal` 
-3. Rename the provided sample .env file located in the backend folder which keeps the nessasary configuration `mv backend/.env.sample backend/.env`. It is safe to keep the defaults.  
+3. Rename the provided sample .env file located in the backend folder which keeps the necessary configuration `mv backend/.env.sample backend/.env`. It is safe to keep the defaults.  
 4. Build the images and spin up the containers with `docker-compose up`
 5. You can access the frontend at http://localhost:8080
 
