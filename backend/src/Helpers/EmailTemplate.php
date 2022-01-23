@@ -37,7 +37,7 @@ class EmailTemplate
     /**
      * Constructor
      * 
-     * @param sting $templatePath the path to the html template file
+     * @param string $templatePath the path to the html template file
      */
     public function __construct(string $templatePath)
     {
